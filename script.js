@@ -21,7 +21,7 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 // Typing effect
-const text = "You are one of the most special people in my life. I’m truly grateful to have you.";
+const text = "You are one of the most special people in my life. I’m truly grateful to have you for somtime only but atleast i have .";
 let i = 0;
 function typeMessage() {
   if (i < text.length) {
