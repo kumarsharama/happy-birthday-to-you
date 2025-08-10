@@ -71,3 +71,36 @@ body {
   font-size: 1.1em;
   padding: 20px;
 }
+/* Floating hearts container */
+.hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 9999;
+}
+
+/* Each heart */
+.heart {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url('https://i.postimg.cc/fTQ6sSV7/heart.png') no-repeat center center / contain;
+  animation: floatUp 5s linear forwards;
+  opacity: 0.8;
+}
+
+/* Animation for floating hearts */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-600px) scale(1.5);
+    opacity: 0;
+  }
+}
