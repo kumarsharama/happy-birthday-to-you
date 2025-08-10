@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Surprise! 😂</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Funny page overrides */
+    body {
+      background: #fff0f5;
+      color: #4b0082;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px #ffa07a;
+      animation: shake 0.8s infinite alternate;
+    }
+    p {
+      font-size: 1.5em;
+      margin-bottom: 30px;
+      color: #d2691e;
+    }
+    /* Shake animation */
+    @keyframes shake {
+      0% { transform: rotate(-5deg); }
+      100% { transform: rotate(5deg); }
+    }
+    /* Video container */
+    .video-section {
+      max-width: 720px;
+      margin: 0 auto;
+      border: 6px dashed #ff69b4;
+      border-radius: 20px;
+      padding: 15px;
+      background: #fff0f5;
+      box-shadow: 0 0 20px #ff1493;
+    }
+    video {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #db7093;
+    }
+    /* Back Button */
+    .back-btn {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 12px 28px;
+      font-size: 1.1em;
+      color: #fff;
+      background: linear-gradient(45deg, #ff69b4, #c71585);
+      border: none;
+      border-radius: 35px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.7);
+      transition: background 0.4s ease, transform 0.3s ease;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .back-btn:hover {
+      background: linear-gradient(45deg, #c71585, #ff69b4);
+      transform: scale(1.05);
+      box-shadow: 0 7px 25px rgba(255, 105, 180, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <h1>Surprise! 😂</h1>
+  <p>Here’s a little something to make you smile!</p>
+
+  <div class="video-section">
+    <video controls autoplay loop muted>
+      <source src="assets/video/funny.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <a href="sorry.html" class="back-btn">← Back to Sorry Page</a>
+</body>
+</html>
