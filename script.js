@@ -58,3 +58,5 @@ function createHeart() {
 }
 
 // Create container for hearts in index.html body (add this line inside <body> container)
+// Start floating hearts every 500ms
+setInterval(createHeart, 500);
