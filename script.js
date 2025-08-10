@@ -60,3 +60,18 @@ function createHeart() {
 // Create container for hearts in index.html body (add this line inside <body> container)
 // Start floating hearts every 500ms
 setInterval(createHeart, 500);
+const swiper = new Swiper(".mySwiper", {
+  loop: true,
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+});
