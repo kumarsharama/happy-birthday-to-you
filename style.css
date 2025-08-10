@@ -183,3 +183,25 @@ body {
   transform: scale(1.05);
   filter: drop-shadow(0 0 10px #ff7f9d);
 }
+.next-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-size: 1.1em;
+  color: #fff;
+  background: linear-gradient(45deg, #3cb371, #2e8b57);
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 5px 15px rgba(60, 179, 113, 0.7);
+  transition: background 0.4s ease, transform 0.3s ease;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.next-btn:hover {
+  background: linear-gradient(45deg, #2e8b57, #3cb371);
+  transform: scale(1.05);
+  box-shadow: 0 7px 25px rgba(60, 179, 113, 0.9);
+}
