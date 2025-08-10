@@ -37,3 +37,24 @@ confetti({
   spread: 70,
   origin: { y: 0.6 }
 });
+// Generate floating hearts periodically
+function createHeart() {
+  const heartsContainer = document.querySelector('.hearts');
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  
+  // Random horizontal position
+  heart.style.left = Math.random() * 100 + 'vw';
+  
+  // Random animation duration between 4-7s
+  heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+  
+  heartsContainer.appendChild(heart);
+  
+  // Remove heart after animation ends (5s max)
+  setTimeout(() => {
+    heart.remove();
+  }, 7000);
+}
+
+// Create container for hearts in index.html body (add this line inside <body> container)
