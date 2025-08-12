@@ -91,3 +91,40 @@ document.addEventListener("click", function playMusic() {
     audio.play();
     document.removeEventListener("click", playMusic); // Only run once
 });
+// -------------------- FLOATING HEARTS --------------------
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 5000);
+}
+
+setInterval(createHeart, 500);
+
+// -------------------- CONFETTI --------------------
+function launchConfetti() {
+    const colors = ['#ff0', '#0f0', '#00f', '#f0f', '#0ff', '#f00'];
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+            confetti.remove();
+        }, 5000);
+    }
+}
+
+// Optional: Launch confetti when page loads
+window.addEventListener('load', () => {
+    launchConfetti();
+});
