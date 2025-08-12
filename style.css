@@ -243,3 +243,114 @@ body {
         transform: translateY(100vh) rotate(720deg);
     }
 }
+.dark-horror-section {
+  background: #121212;
+  color: #f44336;
+  font-family: 'Creepster', cursive, Arial, sans-serif;
+  padding: 30px 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  border: 2px solid #f44336;
+  border-radius: 15px;
+  box-shadow:
+    0 0 15px #f44336,
+    inset 0 0 20px #7f0000;
+  text-align: center;
+}
+
+.dark-horror-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px #f44336;
+}
+
+.dark-horror-section .note {
+  font-style: italic;
+  color: #ffa399;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.option-btn {
+  background: transparent;
+  border: 2px solid #f44336;
+  color: #f44336;
+  font-size: 1.1rem;
+  padding: 12px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px #7f0000;
+  user-select: none;
+}
+
+.option-btn:hover, .option-btn.selected {
+  background: #f44336;
+  color: #121212;
+  box-shadow:
+    0 0 20px #ff6f61,
+    inset 0 0 10px #ff6f61;
+}
+
+#visitor-note {
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid #f44336;
+  background: #1b1b1b;
+  color: #ffa399;
+  padding: 12px;
+  font-size: 1rem;
+  resize: vertical;
+  box-shadow: inset 0 0 10px #7f0000;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease;
+}
+
+#visitor-note:focus {
+  border-color: #ff6f61;
+  outline: none;
+  box-shadow:
+    0 0 10px #ff6f61,
+    inset 0 0 15px #ff6f61;
+}
+
+#submit-choice {
+  background: #f44336;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  color: #121212;
+  cursor: pointer;
+  box-shadow:
+    0 0 15px #ff6f61,
+    inset 0 0 15px #ff6f61;
+  transition: background 0.3s ease;
+}
+
+#submit-choice:disabled {
+  background: #7f0000;
+  cursor: not-allowed;
+  box-shadow: none;
+  color: #aaa;
+}
+
+#submit-choice:hover:not(:disabled) {
+  background: #ff6f61;
+  box-shadow:
+    0 0 25px #ff8a75,
+    inset 0 0 20px #ff8a75;
+}
+
+.response-message {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ff8a75;
+  text-shadow: 0 0 8px #ff8a75;
+}
