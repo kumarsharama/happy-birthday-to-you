@@ -6,7 +6,7 @@
   <title>Surprise! 😂</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Funny page overrides */
+    /* Minimal overrides kept intentionally (your original vibe) */
     body {
       background: #fff0f5;
       color: #4b0082;
@@ -20,17 +20,9 @@
       text-shadow: 2px 2px #ffa07a;
       animation: shake 0.8s infinite alternate;
     }
-    p {
-      font-size: 1.5em;
-      margin-bottom: 30px;
-      color: #d2691e;
-    }
-    /* Shake animation */
-    @keyframes shake {
-      0% { transform: rotate(-5deg); }
-      100% { transform: rotate(5deg); }
-    }
-    /* Video container */
+    p { font-size: 1.5em; margin-bottom: 30px; color: #d2691e; }
+    @keyframes shake { 0% { transform: rotate(-5deg); } 100% { transform: rotate(5deg); } }
+
     .video-section {
       max-width: 720px;
       margin: 0 auto;
@@ -40,12 +32,8 @@
       background: #fff0f5;
       box-shadow: 0 0 20px #ff1493;
     }
-    video {
-      width: 100%;
-      border-radius: 15px;
-      box-shadow: 0 0 15px #db7093;
-    }
-    /* Back Button */
+    video { width: 100%; border-radius: 15px; box-shadow: 0 0 15px #db7093; }
+
     .back-btn {
       display: inline-block;
       margin-top: 35px;
@@ -62,10 +50,13 @@
       font-weight: 700;
       letter-spacing: 0.05em;
     }
-    .back-btn:hover {
-      background: linear-gradient(45deg, #c71585, #ff69b4);
-      transform: scale(1.05);
-      box-shadow: 0 7px 25px rgba(255, 105, 180, 0.9);
+    .back-btn:hover { transform: scale(1.05); }
+    .video-missing {
+      padding: 24px;
+      background: #fff6fb;
+      border-radius: 12px;
+      color: #c71585;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -74,12 +65,25 @@
   <p>Here’s a little something to make you smile!</p>
 
   <div class="video-section">
-    <video controls autoplay loop muted>
-      <source src="assets/video/funny.mp4" type="video/mp4" />
+    <!-- Poster + fallback: if video file missing user sees a friendly panel -->
+    <video controls autoplay loop muted poster="assets/placeholder-image.png" id="funnyVideo">
+      <source src="assets/video/funny.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
+    <div id="videoFallback" class="video-missing" style="display:none;">
+      Oops — the surprise video isn't available right now. Enjoy the music and photos instead!
+    </div>
   </div>
 
   <a href="sorry.html" class="back-btn">← Back to Sorry Page</a>
+
+  <script>
+    // show fallback if video fails to load
+    const v = document.getElementById('funnyVideo');
+    v.addEventListener('error', () => {
+      v.style.display = 'none';
+      document.getElementById('videoFallback').style.display = 'block';
+    });
+  </script>
 </body>
 </html>
