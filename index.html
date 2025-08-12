@@ -1,86 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Swiper CSS -->
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
-/>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Happy Birthday 🎉</title>
-  <audio id="bgMusic" src="assets/happy.mp3" autoplay loop></audio>
+
+  <!-- Fixed: separate links for Swiper CSS and Google Fonts -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <div class="hearts"></div>
+    <div class="hearts" aria-hidden="true"></div>
+
     <h1 class="title">Happy Birthday rani 🎂</h1>
     <p class="subtitle">Wishing you love, laughter, and joy today and always.</p>
 
     <!-- Countdown Timer -->
     <div class="countdown">
       <h2>Time left until your special day ends:</h2>
-      <div id="timer"></div>
+      <div id="timer" aria-live="polite"></div>
     </div>
 
-    <!-- Image Gallery -->
-   <div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-    <div class="swiper-slide"><img src="images/photo1.png" alt="Photo 1" /></div>
-    <div class="swiper-slide"><img src="images/photo2.jpg" alt="Photo 2" /></div>
-    <div class="swiper-slide"><img src="images/photo3.jpg" alt="Photo 3" /></div>
-    <!-- Add more slides here -->
-  </div>
-  <!-- Pagination dots -->
-  <div class="swiper-pagination"></div>
-  <!-- Navigation arrows -->
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-</div>
-    
+    <!-- Image Gallery (Swiper) -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="images/photo1.png" alt="Photo 1" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
+        <div class="swiper-slide"><img src="images/photo2.jpg" alt="Photo 2" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
+        <div class="swiper-slide"><img src="images/photo3.jpg" alt="Photo 3" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
+      </div>
+      <div class="swiper-pagination" aria-hidden="true"></div>
+      <div class="swiper-button-next" aria-hidden="true"></div>
+      <div class="swiper-button-prev" aria-hidden="true"></div>
+    </div>
+
     <!-- Message Section -->
     <div class="message">
       <h2>A Message for You</h2>
-      <p id="typed-message"></p>
+      <p id="typed-message" aria-live="polite"></p>
     </div>
-    
-<h1 class="fade-in">🎂 Happy Birthday, My Friend! 🎂</h1>
-<p class="fade-in" style="animation-delay: 1s;">Wishing you a day filled with love, laughter, and joy 💖</p>
-<img src="images/cake.jpg" alt="Birthday Cake" class="fade-in" style="animation-delay: 2s;">
 
-    <!-- Music -->
-    <audio controls autoplay loop>
+    <h1 class="fade-in">🎂 Happy Birthday, My Friend! 🎂</h1>
+    <p class="fade-in" style="animation-delay: 1s;">Wishing you a day filled with love, laughter, and joy 💖</p>
+    <img src="images/cake.jpg" alt="Birthday Cake" class="fade-in" style="animation-delay: 2s;" onerror="this.onerror=null;this.src='assets/placeholder-image.png'">
+
+    <!-- Primary background music (one element) -->
+    <audio id="bgMusic" src="assets/happy.mp3" loop preload="auto"></audio>
+
+    <!-- Secondary music (optional) -->
+    <audio id="birthday-music" controls style="margin-top:18px;">
       <source src="assets/music/birthday.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
-    
-     <section id="choice-section" class="dark-horror-section">
-  <h2>Choose Your Fate</h2>
-  <p class="note">Select one option below, then share your thoughts in the box.</p>
 
-  <div class="options">
-    <button class="option-btn" data-choice="The Haunted Path">👻 The Haunted Path</button>
-    <button class="option-btn" data-choice="The Silent Crypt">🕯️ The Silent Crypt</button>
+    <!-- Choice Section -->
+    <section id="choice-section" class="dark-horror-section">
+      <h2>Choose Your Fate</h2>
+      <p class="note">Select one option below, then share your thoughts in the box.</p>
+
+      <div class="options">
+        <button class="option-btn btn btn-outline" data-choice="The Haunted Path">👻 The Haunted Path</button>
+        <button class="option-btn btn btn-outline" data-choice="The Silent Crypt">🕯️ The Silent Crypt</button>
+      </div>
+
+      <textarea id="visitor-note" placeholder="Write your spooky message here..." rows="5"></textarea>
+
+      <button id="submit-choice" class="btn btn-primary" disabled>Submit</button>
+
+      <p id="choice-response" class="response-message" aria-live="polite"></p>
+    </section>
+
+    <!-- Buttons laid out consistently -->
+    <div class="actions-row">
+      <a href="sorry.html" class="btn btn-outline sorry-btn">I Have Something to Say...</a>
+    </div>
   </div>
 
-  <textarea id="visitor-note" placeholder="Write your spooky message here..." rows="5"></textarea>
+  <!-- Swiper & confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-  <button id="submit-choice" disabled>Submit</button>
-
-  <p id="choice-response" class="response-message"></p>
-</section>
-    
-
-    <!-- Sorry Page Button -->
-    <a href="sorry.html" class="sorry-btn">I Have Something to Say...</a>
-  </div>
-  
- <!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
- 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script src="script.js"></script>
+  <!-- App script (upgraded) -->
+  <script src="script.js"></script>
 </body>
 </html>
