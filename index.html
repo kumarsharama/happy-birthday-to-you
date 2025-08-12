@@ -39,7 +39,23 @@
   <div class="swiper-button-next"></div>
   <div class="swiper-button-prev"></div>
 </div>
+    
+    <section id="choice-section" class="dark-horror-section">
+  <h2>Choose Your Fate</h2>
+  <p class="note">Select one option below, then share your thoughts in the box.</p>
 
+  <div class="options">
+    <button class="option-btn" data-choice="The Haunted Path">👻 The Haunted Path</button>
+    <button class="option-btn" data-choice="The Silent Crypt">🕯️ The Silent Crypt</button>
+  </div>
+
+  <textarea id="visitor-note" placeholder="Write your spooky message here..." rows="5"></textarea>
+
+  <button id="submit-choice" disabled>Submit</button>
+
+  <p id="choice-response" class="response-message"></p>
+</section>
+    
     <!-- Message Section -->
     <div class="message">
       <h2>A Message for You</h2>
