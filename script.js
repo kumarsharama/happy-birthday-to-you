@@ -174,3 +174,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.appendChild(momentBtn);
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const optionButtons = document.querySelectorAll(".option-btn");
+  const submitBtn = document.getElementById("submit-choice");
+  const noteField = document.getElementById("visitor-note");
+  const responseMsg = document.getElementById("choice-response");
+
+  let selectedOption = null;
+
+  optionButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      optionButtons.forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+      selectedOption = btn.getAttribute("data-choice");
+      checkReady();
+      responseMsg.textContent = ""; // Clear previous message
+    });
+  });
+
+  function checkReady() {
+    if (selectedOption && noteField.value.trim().length > 0) {
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.disabled = true;
+    }
+  }
+
+  noteField.addEventListener("input", checkReady);
+
+  submitBtn.addEventListener("click", () => {
+    if (!selectedOption || noteField.value.trim() === "") return;
+
+    // For demo, just show a thank you message.
+    responseMsg.textContent = `Thank you for choosing "${selectedOption}" and your message! 👻`;
+    // Optionally, here you can send data to your server or service
+
+    // Reset
+    optionButtons.forEach(b => b.classList.remove("selected"));
+    selectedOption = null;
+    noteField.value = "";
+    submitBtn.disabled = true;
+  });
+});
