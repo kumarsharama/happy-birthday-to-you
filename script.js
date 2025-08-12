@@ -75,3 +75,19 @@ const swiper = new Swiper(".mySwiper", {
     prevEl: ".swiper-button-prev",
   },
 });
+document.addEventListener("click", function playMusic() {
+    let audio = document.getElementById("bg-music");
+    audio.muted = false; // Unmute
+    audio.volume = 0;    // Start from 0 volume
+
+    let fadeAudio = setInterval(function () {
+        if (audio.volume < 1) {
+            audio.volume = Math.min(1, audio.volume + 0.05);
+        } else {
+            clearInterval(fadeAudio);
+        }
+    }, 200); // Increase volume every 200ms
+
+    audio.play();
+    document.removeEventListener("click", playMusic); // Only run once
+});
