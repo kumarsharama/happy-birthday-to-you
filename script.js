@@ -128,3 +128,70 @@ function launchConfetti() {
 window.addEventListener('load', () => {
     launchConfetti();
 });
+// --- Romantic "Our Special Moment" Button ---
+document.addEventListener("DOMContentLoaded", function () {
+    // Create the button
+    const momentBtn = document.createElement("button");
+    momentBtn.innerText = "💖 Our Special Moment 💖";
+    momentBtn.style.position = "fixed";
+    momentBtn.style.bottom = "20px";
+    momentBtn.style.right = "20px";
+    momentBtn.style.padding = "12px 20px";
+    momentBtn.style.background = "linear-gradient(45deg, #ff4b6e, #ff7eb3)";
+    momentBtn.style.color = "white";
+    momentBtn.style.border = "none";
+    momentBtn.style.borderRadius = "30px";
+    momentBtn.style.boxShadow = "0 4px 15px rgba(0,0,0,0.3)";
+    momentBtn.style.cursor = "pointer";
+    momentBtn.style.fontSize = "16px";
+    momentBtn.style.zIndex = "9999";
+    momentBtn.style.transition = "transform 0.2s ease-in-out";
+
+    // Hover effect
+    momentBtn.addEventListener("mouseenter", () => {
+        momentBtn.style.transform = "scale(1.1)";
+    });
+    momentBtn.addEventListener("mouseleave", () => {
+        momentBtn.style.transform = "scale(1)";
+    });
+
+    // Button click action
+    momentBtn.addEventListener("click", function () {
+        // Romantic pop-up modal
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(0,0,0,0.7)";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.zIndex = "10000";
+
+        const modal = document.createElement("div");
+        modal.style.background = "white";
+        modal.style.padding = "20px";
+        modal.style.borderRadius = "20px";
+        modal.style.textAlign = "center";
+        modal.style.maxWidth = "400px";
+        modal.style.boxShadow = "0 4px 20px rgba(0,0,0,0.4)";
+
+        modal.innerHTML = `
+            <h2 style="color:#ff4b6e;">💖 Our Special Moment 💖</h2>
+            <p style="font-size: 16px; color: #333;">From the day we met to this beautiful day, every moment with you has been magical. Here's to many more!</p>
+            <img src="https://media.tenor.com/1r3L2PQl0L4AAAAC/love-heart.gif" style="max-width: 100%; border-radius: 10px; margin: 15px 0;">
+            <button id="closeMoment" style="background:#ff4b6e;color:white;padding:8px 15px;border:none;border-radius:10px;cursor:pointer;">Close</button>
+        `;
+
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        document.getElementById("closeMoment").addEventListener("click", () => {
+            overlay.remove();
+        });
+    });
+
+    document.body.appendChild(momentBtn);
+});
