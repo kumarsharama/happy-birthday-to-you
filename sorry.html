@@ -1,28 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>I’m Sorry 💔</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+  <style>
+    body.sorry-page {
+      background: #1a1a1a;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #2a2a2a;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 3rem;
+      color: #ff4b6e;
+      font-family: 'Creepster', cursive;
+      text-shadow: 0 0 10px #ff4b6e;
+    }
+    .apology-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #f8d7da;
+      white-space: pre-wrap;
+    }
+    audio {
+      margin-bottom: 25px;
+      width: 100%;
+      outline: none;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff4b6e;
+    }
+    .next-btn, .back-btn {
+      display: inline-block;
+      margin: 10px 15px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 15px #ff4b6e;
+      transition: background 0.3s ease;
+    }
+    .next-btn {
+      background: #ff4b6e;
+      color: #121212;
+    }
+    .next-btn:hover {
+      background: #ff758f;
+    }
+    .back-btn {
+      background: transparent;
+      border: 2px solid #ff4b6e;
+      color: #ff4b6e;
+    }
+    .back-btn:hover {
+      background: #ff4b6e;
+      color: #121212;
+    }
+
+    /* ====== DARK HORROR CHOICE SECTION ====== */
+    .dark-horror-section {
+      background: #121212;
+      color: #f44336;
+      font-family: 'Creepster', cursive, Arial, sans-serif;
+      padding: 30px 20px;
+      margin-top: 50px;
+      border: 2px solid #f44336;
+      border-radius: 15px;
+      box-shadow:
+        0 0 15px #f44336,
+        inset 0 0 20px #7f0000;
+      text-align: center;
+    }
+    .dark-horror-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px #f44336;
+    }
+    .dark-horror-section .note {
+      font-style: italic;
+      color: #ffa399;
+      margin-bottom: 20px;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .option-btn {
+      background: transparent;
+      border: 2px solid #f44336;
+      color: #f44336;
+      font-size: 1.1rem;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 8px #7f0000;
+      user-select: none;
+      min-width: 140px;
+    }
+    .option-btn:hover, .option-btn.selected {
+      background: #f44336;
+      color: #121212;
+      box-shadow:
+        0 0 20px #ff6f61,
+        inset 0 0 10px #ff6f61;
+    }
+    #visitor-note {
+      width: 100%;
+      border-radius: 12px;
+      border: 2px solid #f44336;
+      background: #1b1b1b;
+      color: #ffa399;
+      padding: 12px;
+      font-size: 1rem;
+      resize: vertical;
+      box-shadow: inset 0 0 10px #7f0000;
+      margin-bottom: 20px;
+      transition: border-color 0.3s ease;
+    }
+    #visitor-note:focus {
+      border-color: #ff6f61;
+      outline: none;
+      box-shadow:
+        0 0 10px #ff6f61,
+        inset 0 0 15px #ff6f61;
+    }
+    #submit-choice {
+      background: #f44336;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      color: #121212;
+      cursor: pointer;
+      box-shadow:
+        0 0 15px #ff6f61,
+        inset 0 0 15px #ff6f61;
+      transition: background 0.3s ease;
+    }
+    #submit-choice:disabled {
+      background: #7f0000;
+      cursor: not-allowed;
+      box-shadow: none;
+      color: #aaa;
+    }
+    #submit-choice:hover:not(:disabled) {
+      background: #ff6f61;
+      box-shadow:
+        0 0 25px #ff8a75,
+        inset 0 0 20px #ff8a75;
+    }
+    .response-message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #ff8a75;
+      text-shadow: 0 0 8px #ff8a75;
+      min-height: 1.2em;
+    }
+  </style>
 </head>
 <body class="sorry-page">
   <div class="container">
     <h1>I’m Sorry...</h1>
     <p class="apology-text">
-      I know this may not fix everything... but I truly am sorry for what happened. I never meant to hurt you. I hope you can forgive me someday. You mean a lot to me, and I’ll always wish the best for you. dekh tu ja rhi ya nhi nhi malum mager jo v ho thik se rahana hum ab pta nhi text karyge ki nhi mera sab chij se dimag karab ho gya hai ab pta nhi yaar tu q chori thi but ki acha q ki sahi me khud ko nhi [psnd tak karty tu kya karti our ha tu kutiya kamini sab hai hppy birthday to you my derast close frind my mentor suar 
+      I know this may not fix everything... but I truly am sorry for what happened. I never meant to hurt you. I hope you can forgive me someday. You mean a lot to me, and I’ll always wish the best for you. dekh tu ja rhi ya nhi nhi malum mager jo v ho thik se rahana hum ab pta nhi text karyge ki nhi mera sab chij se dimag karab ho gya hai ab pta nhi yaar tu q chori thi but ki acha q ki sahi me khud ko nhi [psnd tak karty tu kya karti our ha tu kutiya kamini sab hai hppy birthday to you my derast close frind my mentor suar
     </p>
 
-    <!-- Sad Music -->
-    <audio controls autoplay loop>
-      <source src="assets/music/sad.mp3" type="audio/mpeg">
+    <audio id="sad-music" controls loop muted>
+      <source src="assets/music/sad.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
     </audio>
 
-    <!-- Next Funny Page Button -->
     <a href="funny.html" class="next-btn">Click Here for a Surprise! 🎉</a>
-
-    <!-- Back Button -->
     <a href="index.html" class="back-btn">← Go Back to Birthday Page</a>
+
+    <!-- New Dark Horror Section -->
+    <section id="choice-section" class="dark-horror-section">
+      <h2>Choose Your Fate</h2>
+      <p class="note">Select one option below, then share your thoughts in the box.</p>
+
+      <div class="options">
+        <button class="option-btn" data-choice="The Haunted Path">👻 The Haunted Path</button>
+        <button class="option-btn" data-choice="The Silent Crypt">🕯️ The Silent Crypt</button>
+      </div>
+
+      <textarea id="visitor-note" placeholder="Write your spooky message here..." rows="5"></textarea>
+
+      <button id="submit-choice" disabled>Submit</button>
+
+      <p id="choice-response" class="response-message"></p>
+    </section>
   </div>
+
+  <script>
+    // Fade in sad music on first user interaction
+    document.addEventListener('click', () => {
+      const audio = document.getElementById('sad-music');
+      if (audio && audio.muted) {
+        audio.muted = false;
+        audio.volume = 0;
+        audio.play().catch(() => {});
+        let vol = 0;
+        const fade = setInterval(() => {
+          vol += 0.02;
+          audio.volume = Math.min(vol, 1);
+          if (vol >= 1) clearInterval(fade);
+        }, 100);
+      }
+    }, { once: true });
+
+    // Choice section JS
+    document.addEventListener("DOMContentLoaded", () => {
+      const optionButtons = document.querySelectorAll(".option-btn");
+      const submitBtn = document.getElementById("submit-choice");
+      const noteField = document.getElementById("visitor-note");
+      const responseMsg = document.getElementById("choice-response");
+
+      let selectedOption = null;
+
+      optionButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          optionButtons.forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          selectedOption = btn.getAttribute("data-choice");
+          checkReady();
+          responseMsg.textContent = "";
+        });
+      });
+
+      function checkReady() {
+        if (selectedOption && noteField.value.trim().length > 0) {
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.disabled = true;
+        }
+      }
+
+      noteField.addEventListener("input", checkReady);
+
+      submitBtn.addEventListener("click", () => {
+        if (!selectedOption || noteField.value.trim() === "") return;
+
+        responseMsg.textContent = `Thank you for choosing "${selectedOption}" and your message! 👻`;
+
+        optionButtons.forEach(b => b.classList.remove("selected"));
+        selectedOption = null;
+        noteField.value = "";
+        submitBtn.disabled = true;
+      });
+    });
+  </script>
 </body>
 </html>
