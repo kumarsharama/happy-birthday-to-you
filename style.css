@@ -252,3 +252,19 @@ body {
     border-radius: 15px;
   }
 }
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('images/aron-visuals-LSFuPFE9vKE-unsplash.jpg'); /* Mountain Night */
+  background-size: cover;      /* Fill the screen */
+  background-position: center; /* Center the image */
+  background-attachment: fixed;/* Keep still while scrolling */
+  background-repeat: no-repeat;
+}
+
+/* If you want Heart Cloud instead, replace the file name: */
+/*
+body {
+  background-image: url('images/istockphoto-155368405-1024x1024.jpg');
+}
+*/
