@@ -268,3 +268,10 @@ body {
   background-image: url('images/istockphoto-155368405-1024x1024.jpg');
 }
 */
+body.main-page {
+  background-image: url('images/aron-visuals-LSFuPFE9vKE-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
