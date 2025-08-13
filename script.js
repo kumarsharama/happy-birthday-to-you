@@ -63,15 +63,37 @@ function createHeart() {
 setInterval(createHeart, 600);
 
 // -------------------- SWIPER SLIDESHOW (guarded) --------------------
+
 function initSwiper() {
   try {
     if (typeof Swiper === 'function') {
       // eslint-disable-next-line no-undef
       const swiper = new Swiper(".mySwiper", {
         loop: true,
-        autoplay: { delay: 3000, disableOnInteraction: false },
-        pagination: { el: ".swiper-pagination", clickable: true },
-        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        centeredSlides: true,
+        grabCursor: true,
+
+        // Smooth fade effect with zoom compatibility
+        effect: "fade",
+        fadeEffect: { crossFade: true },
+
+        // Slower, premium transition speed
+        speed: 1200,
+
+        autoplay: {
+          delay: 2500, // shorter display per image
+          disableOnInteraction: false
+        },
+
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
       });
     } else {
       console.warn('Swiper not available — slides will remain static.');
@@ -80,7 +102,9 @@ function initSwiper() {
     console.error('Swiper init error', err);
   }
 }
+
 window.addEventListener('load', initSwiper);
+
 
 // -------------------- MUSIC FADE-IN (fixed ID to match HTML) --------------------
 document.addEventListener("click", function playMusic() {
