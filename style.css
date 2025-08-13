@@ -222,3 +222,33 @@ body {
   .swiper{ height:260px; }
   .container{ padding:20px; }
 }
+/* --- Custom Romantic/Festive Slideshow Styling --- */
+.swiper {
+  padding: 20px 0;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+  transition: transform 0.8s ease, box-shadow 0.8s ease;
+  max-width: 100%;
+  height: auto;
+}
+
+.swiper-slide-active img {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(255, 182, 193, 0.6);
+}
+
+/* Make slideshow responsive */
+@media (max-width: 768px) {
+  .swiper-slide img {
+    border-radius: 15px;
+  }
+}
