@@ -56,21 +56,14 @@
     </audio>
 
     <!-- Choice Section -->
-    <section id="choice-section" class="dark-horror-section">
-      <h2>Choose Your Fate</h2>
-      <p class="note">Select one option below, then share your thoughts in the box.</p>
-
-      <div class="options">
-        <button class="option-btn btn btn-outline" data-choice="The Haunted Path">👻 The Haunted Path</button>
-        <button class="option-btn btn btn-outline" data-choice="The Silent Crypt">🕯️ The Silent Crypt</button>
-      </div>
-
-      <textarea id="visitor-note" placeholder="Write your spooky message here..." rows="5"></textarea>
-
-      <button id="submit-choice" class="btn btn-primary" disabled>Submit</button>
-
-      <p id="choice-response" class="response-message" aria-live="polite"></p>
-    </section>
+   <section class="question-section">
+  <h2>Do you want to see something special?</h2>
+  <form id="special-question-form">
+    <label><input type="radio" name="specialAnswer" value="Yes"> Yes</label>
+    <label><input type="radio" name="specialAnswer" value="No"> No</label>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</section>
 
     <!-- Buttons laid out consistently -->
     <div class="actions-row">
