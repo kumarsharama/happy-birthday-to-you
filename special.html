@@ -6,18 +6,35 @@
   <title>Our Special Moment 💖</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    /* Video Background Styling */
+    #bgVideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.7);
+    }
+
+    /* Gallery Styling */
     .special-gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
       margin-top: 30px;
+      z-index: 1;
+      position: relative;
     }
+
     .special-gallery img {
       width: 100%;
       border-radius: 12px;
       cursor: pointer;
       transition: transform 0.3s, box-shadow 0.3s;
     }
+
     .special-gallery img:hover {
       transform: scale(1.05);
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
@@ -25,16 +42,24 @@
   </style>
 </head>
 <body>
+  <!-- Live Video Background -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="assets/background.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
   <div class="container">
     <h1 class="title">💖 Our Special Moments 💖</h1>
-    <p class="subtitle">Here are four beautiful memories for you.</p>
+    <p class="subtitle">A few memories that mean the world to me...</p>
+
     <div class="special-gallery">
       <img src="images/special1.jpg" alt="Special 1">
       <img src="images/special2.jpg" alt="Special 2">
       <img src="images/special3.jpg" alt="Special 3">
       <img src="images/special4.jpg" alt="Special 4">
     </div>
-    <div class="actions-row">
+
+    <div class="actions-row" style="margin-top:30px;">
       <a href="index.html" class="btn btn-outline">← Back</a>
     </div>
   </div>
