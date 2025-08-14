@@ -193,40 +193,28 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // -------------------- CHOICE SECTION HANDLING (kept) --------------------
+// -------------------- SPECIAL QUESTION HANDLING --------------------
 document.addEventListener("DOMContentLoaded", () => {
-  const optionButtons = document.querySelectorAll(".option-btn");
-  const submitBtn = document.getElementById("submit-choice");
-  const noteField = document.getElementById("visitor-note");
-  const responseMsg = document.getElementById("choice-response");
+  const form = document.getElementById("special-question-form");
+  if (!form) return;
 
-  let selectedOption = null;
-
-  optionButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      optionButtons.forEach(b => b.classList.remove("selected"));
-      btn.classList.add("selected");
-      selectedOption = btn.getAttribute("data-choice");
-      checkReady();
-      if (responseMsg) responseMsg.textContent = "";
-    });
-  });
-
-  function checkReady() {
-    if (selectedOption && noteField && noteField.value.trim().length > 0) {
-      submitBtn.disabled = false;
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const answer = form.specialAnswer.value;
+    if (answer === "Yes") {
+      showSpecialMomentButton();
     } else {
-      if (submitBtn) submitBtn.disabled = true;
+      alert("Maybe next time! 😊");
     }
-  }
-
-  if (noteField) noteField.addEventListener("input", checkReady);
-
-  if (submitBtn) submitBtn.addEventListener("click", () => {
-    if (!selectedOption || !noteField || noteField.value.trim() === "") return;
-    if (responseMsg) responseMsg.textContent = `Thank you for choosing "${selectedOption}" and your message! 👻`;
-    optionButtons.forEach(b => b.classList.remove("selected"));
-    selectedOption = null;
-    noteField.value = "";
-    submitBtn.disabled = true;
   });
 });
+
+function showSpecialMomentButton() {
+  const btn = document.createElement("a");
+  btn.href = "special.html";
+  btn.innerText = "💖 Our Special Moment 💖";
+  btn.className = "btn btn-primary";
+  btn.style.display = "inline-block";
+  btn.style.marginTop = "20px";
+  document.querySelector(".question-section").appendChild(btn);
+}
