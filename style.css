@@ -10,7 +10,7 @@
   --glass: rgba(255,255,255,0.12);
   --btn-radius: 30px;
   --btn-padding: 12px 28px;
-  --font-sans: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-sans: 'DynaPuff', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 * {box-sizing: border-box;}
