@@ -265,6 +265,7 @@ const images = Array.from(galleryNodes)
     overlay.classList.remove('hidden');
     overlay.setAttribute('aria-hidden', 'false');
     body.classList.add('lightbox-open');
+    startStars();
     show(i);
     if (autoplayToggle.checked) startAutoplay();
   }
@@ -272,6 +273,7 @@ const images = Array.from(galleryNodes)
     overlay.classList.add('hidden');
     overlay.setAttribute('aria-hidden', 'true');
     body.classList.remove('lightbox-open');
+    stopStars();
     stopAutoplay();
   }
 
