@@ -218,3 +218,124 @@ function showSpecialMomentButton() {
   btn.style.marginTop = "20px";
   document.querySelector(".question-section").appendChild(btn);
 }
+// ===== LIGHTBOX for photos (tap to open, blur background, slideshow) =====
+(() => {
+  const overlay = document.getElementById('lb');
+  if (!overlay) return; // only on pages where we added the markup
+
+  const body = document.body;
+  const imgEl = document.getElementById('lbImg');
+  const closeBtn = document.getElementById('lbClose');
+  const prevBtn = document.getElementById('lbPrev');
+  const nextBtn = document.getElementById('lbNext');
+  const nowEl = document.getElementById('lbNow');
+  const totalEl = document.getElementById('lbTotal');
+
+  const autoplayToggle = document.getElementById('lbAutoplay');
+  const addFileBtn = document.getElementById('lbAddFileBtn');
+  const fileInput = document.getElementById('lbFile');
+  const urlInput = document.getElementById('lbUrl');
+  const addUrlBtn = document.getElementById('lbAddUrlBtn');
+
+  // Collect initial images from the main gallery (Swiper) if present
+  const galleryNodes = document.querySelectorAll('.swiper .swiper-slide img');
+  const images = Array.from(galleryNodes).map(img => img.getAttribute('src')).filter(Boolean);
+
+  // Fallback (in case an image is missing) — optional
+  const FALLBACK = 'assets/placeholder-image.png';
+
+  let idx = 0;
+  let autoplayTimer = null;
+  function show(i) {
+    if (!images.length) return;
+    idx = (i + images.length) % images.length;
+    const src = images[idx];
+    imgEl.src = src;
+    imgEl.onerror = () => { if (FALLBACK) imgEl.src = FALLBACK; };
+    nowEl.textContent = String(idx + 1);
+    totalEl.textContent = String(images.length);
+  }
+
+  function openAt(i) {
+    if (!images.length) return;
+    overlay.classList.remove('hidden');
+    overlay.setAttribute('aria-hidden', 'false');
+    body.classList.add('lightbox-open');
+    show(i);
+    if (autoplayToggle.checked) startAutoplay();
+  }
+  function close() {
+    overlay.classList.add('hidden');
+    overlay.setAttribute('aria-hidden', 'true');
+    body.classList.remove('lightbox-open');
+    stopAutoplay();
+  }
+
+  function next() { show(idx + 1); }
+  function prev() { show(idx - 1); }
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayTimer = setInterval(next, 2500);
+  }
+  function stopAutoplay() {
+    if (autoplayTimer) clearInterval(autoplayTimer);
+    autoplayTimer = null;
+  }
+
+  // Wire clicks on existing photos
+  galleryNodes.forEach((node, i) => {
+    node.style.cursor = 'zoom-in';
+    node.addEventListener('click', () => openAt(i));
+  });
+
+  // Controls
+  closeBtn.addEventListener('click', close);
+  nextBtn.addEventListener('click', next);
+  prevBtn.addEventListener('click', prev);
+
+  // Keyboard support
+  document.addEventListener('keydown', (e) => {
+    if (overlay.classList.contains('hidden')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  // Click on dark area (outside image) closes
+  overlay.addEventListener('click', (e) => {
+    const withinStage = e.target.closest('.lb-stage');
+    if (!withinStage) close();
+  });
+
+  // Autoplay toggle
+  autoplayToggle.addEventListener('change', () => {
+    if (autoplayToggle.checked) startAutoplay();
+    else stopAutoplay();
+  });
+
+  // Add more: from device
+  addFileBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    const files = Array.from(fileInput.files || []);
+    files.forEach(f => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        images.push(reader.result);
+        totalEl.textContent = String(images.length);
+      };
+      reader.readAsDataURL(f);
+    });
+    if (overlay.classList.contains('hidden') && images.length) openAt(images.length - 1);
+  });
+
+  // Add more: from URL
+  addUrlBtn.addEventListener('click', () => {
+    const url = (urlInput.value || '').trim();
+    if (!url) return;
+    images.push(url);
+    urlInput.value = '';
+    totalEl.textContent = String(images.length);
+    if (overlay.classList.contains('hidden')) openAt(images.length - 1);
+  });
+})();
