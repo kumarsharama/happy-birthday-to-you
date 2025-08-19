@@ -237,9 +237,13 @@ function showSpecialMomentButton() {
   const urlInput = document.getElementById('lbUrl');
   const addUrlBtn = document.getElementById('lbAddUrlBtn');
 
-  // Collect initial images from the main gallery (Swiper) if present
-  const galleryNodes = document.querySelectorAll('.swiper .swiper-slide img');
-  const images = Array.from(galleryNodes).map(img => img.getAttribute('src')).filter(Boolean);
+// Collect initial images from either Swiper (index.html) or special-gallery (special.html)
+const galleryNodes = document.querySelectorAll(
+  '.swiper .swiper-slide img, .special-gallery img'
+);
+const images = Array.from(galleryNodes)
+  .map(img => img.getAttribute('src'))
+  .filter(Boolean);
 
   // Fallback (in case an image is missing) — optional
   const FALLBACK = 'assets/placeholder-image.png';
