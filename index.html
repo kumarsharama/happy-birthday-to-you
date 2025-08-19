@@ -16,6 +16,29 @@
   <div class="container">
     <div class="hearts" aria-hidden="true"></div>
 
+    <!-- Lightbox Overlay -->
+<div id="lb" class="lb hidden" aria-hidden="true" role="dialog" aria-label="Photo viewer">
+  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+
+  <div class="lb-stage">
+    <img id="lbImg" alt="Photo" />
+    <div class="lb-counter"><span id="lbNow">1</span>/<span id="lbTotal">1</span></div>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+  </div>
+
+  <!-- Tools: autoplay + add images -->
+  <div class="lb-tools">
+    <label class="lb-toggle">
+      <input type="checkbox" id="lbAutoplay"> Autoplay
+    </label>
+    <button class="btn btn-outline" id="lbAddFileBtn">Add from device</button>
+    <input type="file" id="lbFile" accept="image/*" hidden>
+    <input type="url" id="lbUrl" class="lb-url" placeholder="Paste image URL">
+    <button class="btn btn-primary" id="lbAddUrlBtn">Add</button>
+  </div>
+</div>
+
     <h1 class="title">Happy Birthday rani 🎂</h1>
     <p class="subtitle">Wishing you love, laughter, and joy today and always.</p>
 
