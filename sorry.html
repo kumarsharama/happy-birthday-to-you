@@ -10,7 +10,7 @@
     body.sorry-page {
       background: #fff0f5;
       color: #4b0082;
-      font-family: var(--font-sans)
+      font-family: var(--font-sans);
       text-align: center;
       padding: 50px 20px;
     }
@@ -27,7 +27,7 @@
       margin-bottom: 20px;
       font-size: 3rem;
       color: #ff4b6e;
-      font-family: 'Creepster', cursive;
+      font-family: var(--font-sans);
       text-shadow: 0 0 10px #ff4b6e;
     }
     .apology-text {
@@ -75,7 +75,7 @@
     .dark-horror-section {
       background: #121212;
       color: #f44336;
-      font-family: 'Creepster', cursive, Arial, sans-serif;
+      font-family: var(--font-sans);
       padding: 30px 20px;
       margin-top: 50px;
       border: 2px solid #f44336;
@@ -195,11 +195,6 @@
     <section id="choice-section" class="dark-horror-section">
       <h2>Choose Your Fate</h2>
       <p class="note">Select one option below, then share your thoughts in the box.</p>
-
-      <div class="options">
-        <button class="option-btn" data-choice="The Haunted Path">👻 The Haunted Path</button>
-        <button class="option-btn" data-choice="The Silent Crypt">🕯️ The Silent Crypt</button>
-      </div>
 
       <textarea id="visitor-note" placeholder="Write your spooky message here..." rows="5"></textarea>
 
