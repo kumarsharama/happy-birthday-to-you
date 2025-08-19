@@ -288,10 +288,10 @@ const images = Array.from(galleryNodes)
   }
 
   // Wire clicks on existing photos
-  galleryNodes.forEach((node, i) => {
-    node.style.cursor = 'zoom-in';
-    node.addEventListener('click', () => openAt(i));
-  });
+galleryNodes.forEach((node, i) => {
+  node.style.cursor = 'zoom-in';
+  node.addEventListener('click', () => openAt(i));
+});
 
   // Controls
   closeBtn.addEventListener('click', close);
