@@ -432,3 +432,39 @@ body.lightbox-open::before {
   background: rgba(0,0,0,0.3);
   z-index: 1000;
 }
+/* Fancy animated intro (like stylish YouTube short) */
+.animated-title {
+  font-family: 'DynaPuff', cursive;
+  font-size: 3.5em;
+  text-align: center;
+  margin: 20px 0;
+  background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: popIn 1s ease-out, glow 2s infinite alternate;
+}
+
+.animated-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards 1s;
+  color: #d2691e;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #ff1493, 0 0 15px #ff69b4; }
+  to { text-shadow: 0 0 10px #ffa500, 0 0 20px #ff4500; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
