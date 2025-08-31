@@ -41,7 +41,6 @@ function safeConfetti(opts) {
   if (typeof confetti === 'function') {
     try { confetti(opts); } catch (e) { console.warn('confetti failed', e); }
   } else {
-    // fallback: small burst of DOM confetti pieces (handled elsewhere)
     launchConfetti();
   }
 }
@@ -63,33 +62,24 @@ function createHeart() {
 setInterval(createHeart, 600);
 
 // -------------------- SWIPER SLIDESHOW (guarded) --------------------
-
 function initSwiper() {
   try {
     if (typeof Swiper === 'function') {
-      // eslint-disable-next-line no-undef
       const swiper = new Swiper(".mySwiper", {
         loop: true,
         centeredSlides: true,
         grabCursor: true,
-
-        // Smooth fade effect with zoom compatibility
         effect: "fade",
         fadeEffect: { crossFade: true },
-
-        // Slower, premium transition speed
         speed: 1200,
-
         autoplay: {
-          delay: 2500, // shorter display per image
+          delay: 2500,
           disableOnInteraction: false
         },
-
         pagination: {
           el: ".swiper-pagination",
           clickable: true
         },
-
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
@@ -102,11 +92,9 @@ function initSwiper() {
     console.error('Swiper init error', err);
   }
 }
-
 window.addEventListener('load', initSwiper);
 
-
-// -------------------- MUSIC FADE-IN (fixed ID to match HTML) --------------------
+// -------------------- MUSIC FADE-IN --------------------
 document.addEventListener("click", function playMusic() {
   let audio = document.getElementById("bgMusic");
   if (!audio) return;
@@ -126,10 +114,9 @@ document.addEventListener("click", function playMusic() {
   document.removeEventListener("click", playMusic);
 });
 
-// -------------------- EXTRA CONFETTI LAUNCH (DOM-fallback) --------------------
+// -------------------- EXTRA CONFETTI LAUNCH --------------------
 function launchConfetti() {
   if (typeof confetti === 'function') {
-    // small complementary burst
     confetti({ particleCount: 80, spread: 50, origin: { y: 0.4 } });
     return;
   }
@@ -142,17 +129,14 @@ function launchConfetti() {
     confettiPiece.style.animationDuration = (2 + Math.random() * 3) + 's';
     confettiPiece.style.top = (Math.random() * 20) + 'vh';
     document.body.appendChild(confettiPiece);
-
-    setTimeout(() => {
-      confettiPiece.remove();
-    }, 5000);
+    setTimeout(() => { confettiPiece.remove(); }, 5000);
   }
 }
 window.addEventListener('load', () => {
   setTimeout(launchConfetti, 600);
 });
 
-// -------------------- "OUR SPECIAL MOMENT" BUTTON (kept) --------------------
+// -------------------- "OUR SPECIAL MOMENT" BUTTON --------------------
 document.addEventListener("DOMContentLoaded", function () {
   const momentBtn = document.createElement("button");
   momentBtn.innerText = "💖 Our Special Moment 💖";
@@ -192,12 +176,10 @@ document.addEventListener("DOMContentLoaded", function () {
   document.body.appendChild(momentBtn);
 });
 
-// -------------------- CHOICE SECTION HANDLING (kept) --------------------
 // -------------------- SPECIAL QUESTION HANDLING --------------------
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("special-question-form");
   if (!form) return;
-
   form.addEventListener("submit", e => {
     e.preventDefault();
     const answer = form.specialAnswer.value;
@@ -208,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
 function showSpecialMomentButton() {
   const btn = document.createElement("a");
   btn.href = "special.html";
@@ -218,11 +199,11 @@ function showSpecialMomentButton() {
   btn.style.marginTop = "20px";
   document.querySelector(".question-section").appendChild(btn);
 }
-// ===== LIGHTBOX for photos (tap to open, blur background, slideshow) =====
+
+// ===== LIGHTBOX =====
 (() => {
   const overlay = document.getElementById('lb');
-  if (!overlay) return; // only on pages where we added the markup
-
+  if (!overlay) return;
   const body = document.body;
   const imgEl = document.getElementById('lbImg');
   const closeBtn = document.getElementById('lbClose');
@@ -230,22 +211,14 @@ function showSpecialMomentButton() {
   const nextBtn = document.getElementById('lbNext');
   const nowEl = document.getElementById('lbNow');
   const totalEl = document.getElementById('lbTotal');
-
   const autoplayToggle = document.getElementById('lbAutoplay');
   const addFileBtn = document.getElementById('lbAddFileBtn');
   const fileInput = document.getElementById('lbFile');
   const urlInput = document.getElementById('lbUrl');
   const addUrlBtn = document.getElementById('lbAddUrlBtn');
 
-// Collect initial images from either Swiper (index.html) or special-gallery (special.html)
-const galleryNodes = document.querySelectorAll(
-  '.swiper .swiper-slide img, .special-gallery img'
-);
-const images = Array.from(galleryNodes)
-  .map(img => img.getAttribute('src'))
-  .filter(Boolean);
-
-  // Fallback (in case an image is missing) — optional
+  const galleryNodes = document.querySelectorAll('.swiper .swiper-slide img, .special-gallery img');
+  const images = Array.from(galleryNodes).map(img => img.getAttribute('src')).filter(Boolean);
   const FALLBACK = 'assets/placeholder-image.png';
 
   let idx = 0;
@@ -259,7 +232,6 @@ const images = Array.from(galleryNodes)
     nowEl.textContent = String(idx + 1);
     totalEl.textContent = String(images.length);
   }
-
   function openAt(i) {
     if (!images.length) return;
     overlay.classList.remove('hidden');
@@ -276,66 +248,41 @@ const images = Array.from(galleryNodes)
     stopStars();
     stopAutoplay();
   }
-
   function next() { show(idx + 1); }
   function prev() { show(idx - 1); }
+  function startAutoplay() { stopAutoplay(); autoplayTimer = setInterval(next, 2500); }
+  function stopAutoplay() { if (autoplayTimer) clearInterval(autoplayTimer); autoplayTimer = null; }
 
-  function startAutoplay() {
-    stopAutoplay();
-    autoplayTimer = setInterval(next, 2500);
-  }
-  function stopAutoplay() {
-    if (autoplayTimer) clearInterval(autoplayTimer);
-    autoplayTimer = null;
-  }
-
-  // Wire clicks on existing photos
-galleryNodes.forEach((node, i) => {
-  node.style.cursor = 'zoom-in';
-  node.addEventListener('click', () => openAt(i));
-});
-
-  // Controls
+  galleryNodes.forEach((node, i) => {
+    node.style.cursor = 'zoom-in';
+    node.addEventListener('click', () => openAt(i));
+  });
   closeBtn.addEventListener('click', close);
   nextBtn.addEventListener('click', next);
   prevBtn.addEventListener('click', prev);
-
-  // Keyboard support
   document.addEventListener('keydown', (e) => {
     if (overlay.classList.contains('hidden')) return;
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowRight') next();
     if (e.key === 'ArrowLeft') prev();
   });
-
-  // Click on dark area (outside image) closes
   overlay.addEventListener('click', (e) => {
     const withinStage = e.target.closest('.lb-stage');
     if (!withinStage) close();
   });
-
-  // Autoplay toggle
   autoplayToggle.addEventListener('change', () => {
-    if (autoplayToggle.checked) startAutoplay();
-    else stopAutoplay();
+    if (autoplayToggle.checked) startAutoplay(); else stopAutoplay();
   });
-
-  // Add more: from device
   addFileBtn.addEventListener('click', () => fileInput.click());
   fileInput.addEventListener('change', () => {
     const files = Array.from(fileInput.files || []);
     files.forEach(f => {
       const reader = new FileReader();
-      reader.onload = () => {
-        images.push(reader.result);
-        totalEl.textContent = String(images.length);
-      };
+      reader.onload = () => { images.push(reader.result); totalEl.textContent = String(images.length); };
       reader.readAsDataURL(f);
     });
     if (overlay.classList.contains('hidden') && images.length) openAt(images.length - 1);
   });
-
-  // Add more: from URL
   addUrlBtn.addEventListener('click', () => {
     const url = (urlInput.value || '').trim();
     if (!url) return;
@@ -345,7 +292,8 @@ galleryNodes.forEach((node, i) => {
     if (overlay.classList.contains('hidden')) openAt(images.length - 1);
   });
 })();
-// Smooth fade-up on scroll
+
+// Smooth fade-up
 const faders = document.querySelectorAll('.fade-up');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -357,12 +305,13 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 faders.forEach(f => observer.observe(f));
 
-// Surprise Button triggers confetti + music
+// Surprise Button
 document.getElementById('startBtn').addEventListener('click', () => {
   document.getElementById('bgMusic').play();
   confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
 });
-// Fade in sections on scroll
+
+// Fade in sections
 const sections = document.querySelectorAll('section');
 window.addEventListener('scroll', () => {
   sections.forEach(section => {
@@ -371,7 +320,8 @@ window.addEventListener('scroll', () => {
     }
   });
 });
-// Hearts Section Example
+
+// Hearts
 const heartsContainer = document.getElementById('hearts');
 setInterval(()=>{
   const h = document.createElement('div');
@@ -380,25 +330,6 @@ setInterval(()=>{
   heartsContainer.appendChild(h);
   setTimeout(() => h.remove(), 4000);
 }, 300);
-// Example: when user clicks "Open Surprise" button
-document.getElementById('openSurprise').addEventListener('click', () => {
-  const cake = document.querySelector('.cake-container');
-  cake.classList.add('show');
-});
-// 2. Cake animation trigger
-document.getElementById('openSurprise')?.addEventListener('click', () => {
-  const cake = document.querySelector('.cake-container');
-  if(cake) cake.classList.add('show');
-});
-// Scroll fade-in
-const fadeElements = document.querySelectorAll('.scroll-fade');
-window.addEventListener('scroll', () => {
-  fadeElements.forEach(el => {
-    if(el.getBoundingClientRect().top < window.innerHeight - 100) {
-      el.classList.add('show');
-    }
-  });
-});
 
 // Surprise cake animation
 const surpriseBtn = document.getElementById('openSurprise');
@@ -408,3 +339,13 @@ if (surpriseBtn) {
     if (cake) cake.classList.add('show');
   });
 }
+
+// Unified Scroll fade-in (removed duplicates)
+const fadeElements = document.querySelectorAll('.scroll-fade');
+window.addEventListener('scroll', () => {
+  fadeElements.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add('show');
+    }
+  });
+});
