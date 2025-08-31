@@ -304,3 +304,33 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+// -------------------- SURPRISE CAKE --------------------
+const surpriseBtn = document.getElementById('openSurprise');
+if (surpriseBtn) {
+  surpriseBtn.addEventListener('click', () => {
+    const cake = document.querySelector('.cake-container');
+    const flame = document.querySelector('.candle-flame');
+
+    if (cake) {
+      cake.classList.add('show'); // Cake fades in
+
+      // Candle flickers first, then blow out after 3s
+      setTimeout(() => {
+        if (flame) flame.classList.add('blow-out');
+      }, 3000);
+
+      // Cake explodes after 6s 🎉
+      setTimeout(() => {
+        const cakeImg = cake.querySelector('.cake');
+        if (cakeImg) cakeImg.classList.add('explode');
+
+        // Confetti effect
+        if (typeof confetti === 'function') {
+          confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+        } else {
+          console.log("Confetti library not loaded.");
+        }
+      }, 6000);
+    }
+  });
+}
