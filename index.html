@@ -43,12 +43,10 @@
     <p>Leave your message here!</p>
   </section>
 
-  <script src="script.js"></script>
-
   <!-- 🎥 Hero Section with Video Background -->
   <section class="hero">
     <video autoplay muted loop playsinline class="hero-bg">
-      <source src="background.mp4" type="video/mp4">
+      <source src="assets/background.mp4" type="video/mp4">
     </video>
     <div class="overlay"></div>
 
@@ -105,19 +103,19 @@
   </section>
   
   <div id="countdown"></div>
-<script>
-let targetDate=new Date("2025-09-10 00:00:00").getTime();
-let timer=setInterval(()=>{
-  let now=new Date().getTime();
-  let diff=targetDate-now;
-  if(diff<0){ clearInterval(timer); document.getElementById('countdown').innerHTML="Event Started!"; return;}
-  let d=Math.floor(diff/(1000*60*60*24));
-  let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  let m=Math.floor((diff%(1000*60*60))/(1000*60));
-  let s=Math.floor((diff%(1000*60))/1000);
-  document.getElementById('countdown').innerHTML=`${d}d ${h}h ${m}m ${s}s`;
-},1000);
-</script>
+  <script>
+  let targetDate=new Date("2025-09-10 00:00:00").getTime();
+  let timer=setInterval(()=>{
+    let now=new Date().getTime();
+    let diff=targetDate-now;
+    if(diff<0){ clearInterval(timer); document.getElementById('countdown').innerHTML="Event Started!"; return;}
+    let d=Math.floor(diff/(1000*60*60*24));
+    let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    let m=Math.floor((diff%(1000*60*60))/(1000*60));
+    let s=Math.floor((diff%(1000*60))/1000);
+    document.getElementById('countdown').innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+  },1000);
+  </script>
 
   <!-- 🔗 Actions -->
   <div class="actions fade-up">
@@ -126,28 +124,31 @@ let timer=setInterval(()=>{
 
   <!-- Scripts -->
   <canvas id="bgCanvas"></canvas>
-<script>
-const canvas=document.getElementById('bgCanvas');
-const ctx=canvas.getContext('2d');
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-let particles=[];
-for(let i=0;i<150;i++){
-  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1});
-}
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle='white';
-    ctx.fill();
-    p.y-=0.5;
-    if(p.y<0) p.y=canvas.height;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
+  <script>
+  const canvas=document.getElementById('bgCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  let particles=[];
+  for(let i=0;i<150;i++){
+    particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1});
+  }
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='white';
+      ctx.fill();
+      p.y-=0.5;
+      if(p.y<0) p.y=canvas.height;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+  </script>
+
+  <!-- External Libraries + Script -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
