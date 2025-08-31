@@ -74,6 +74,21 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </section>
+  
+  <div id="countdown"></div>
+<script>
+let targetDate=new Date("2025-09-10 00:00:00").getTime();
+let timer=setInterval(()=>{
+  let now=new Date().getTime();
+  let diff=targetDate-now;
+  if(diff<0){ clearInterval(timer); document.getElementById('countdown').innerHTML="Event Started!"; return;}
+  let d=Math.floor(diff/(1000*60*60*24));
+  let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  let m=Math.floor((diff%(1000*60*60))/(1000*60));
+  let s=Math.floor((diff%(1000*60))/1000);
+  document.getElementById('countdown').innerHTML=`${d}d ${h}h ${m}m ${s}s`;
+},1000);
+</script>
 
   <!-- 🔗 Actions -->
   <div class="actions fade-up">
