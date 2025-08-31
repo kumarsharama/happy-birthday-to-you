@@ -68,10 +68,11 @@ p, span, li, a, button, input, label, div {
 }
 
 /* ===== Countdown ===== */
-#countdown, #countdown-timer {
+#timer {
+  color: #fff;
   font-size: 1.5rem;
   font-weight: bold;
-  padding: 20px;
+  text-align: center;
 }
 
 /* ===== Message Box ===== */
