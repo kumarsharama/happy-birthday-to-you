@@ -36,7 +36,7 @@ function typeMessage() {
 }
 typeMessage();
 
-// -------------------- SAFE CONFETTI (only when lib loaded) --------------------
+// -------------------- SAFE CONFETTI --------------------
 function safeConfetti(opts) {
   if (typeof confetti === 'function') {
     try { confetti(opts); } catch (e) { console.warn('confetti failed', e); }
@@ -61,32 +61,21 @@ function createHeart() {
 }
 setInterval(createHeart, 600);
 
-// -------------------- SWIPER SLIDESHOW (guarded) --------------------
+// -------------------- SWIPER --------------------
 function initSwiper() {
   try {
     if (typeof Swiper === 'function') {
-      const swiper = new Swiper(".mySwiper", {
+      new Swiper(".mySwiper", {
         loop: true,
         centeredSlides: true,
         grabCursor: true,
         effect: "fade",
         fadeEffect: { crossFade: true },
         speed: 1200,
-        autoplay: {
-          delay: 2500,
-          disableOnInteraction: false
-        },
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        }
+        autoplay: { delay: 2500, disableOnInteraction: false },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }
       });
-    } else {
-      console.warn('Swiper not available — slides will remain static.');
     }
   } catch (err) {
     console.error('Swiper init error', err);
@@ -114,7 +103,7 @@ document.addEventListener("click", function playMusic() {
   document.removeEventListener("click", playMusic);
 });
 
-// -------------------- EXTRA CONFETTI LAUNCH --------------------
+// -------------------- CONFETTI FALLBACK --------------------
 function launchConfetti() {
   if (typeof confetti === 'function') {
     confetti({ particleCount: 80, spread: 50, origin: { y: 0.4 } });
@@ -122,21 +111,100 @@ function launchConfetti() {
   }
   const colors = ['#ff0', '#0f0', '#00f', '#f0f', '#0ff', '#f00'];
   for (let i = 0; i < 40; i++) {
-    const confettiPiece = document.createElement('div');
-    confettiPiece.className = 'confetti-piece';
-    confettiPiece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confettiPiece.style.left = Math.random() * 100 + 'vw';
-    confettiPiece.style.animationDuration = (2 + Math.random() * 3) + 's';
-    confettiPiece.style.top = (Math.random() * 20) + 'vh';
-    document.body.appendChild(confettiPiece);
-    setTimeout(() => { confettiPiece.remove(); }, 5000);
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+    piece.style.top = (Math.random() * 20) + 'vh';
+    document.body.appendChild(piece);
+    setTimeout(() => { piece.remove(); }, 5000);
   }
 }
-window.addEventListener('load', () => {
-  setTimeout(launchConfetti, 600);
+window.addEventListener('load', () => setTimeout(launchConfetti, 600));
+
+// -------------------- STARFIELD (moved from CSS) --------------------
+let starCanvas, ctx, stars = [], raf = null;
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+function resizeStars() {
+  if (!starCanvas) return;
+  const { width, height } = starCanvas.parentElement.getBoundingClientRect();
+  starCanvas.width = Math.max(1, Math.floor(width * DPR));
+  starCanvas.height = Math.max(1, Math.floor(height * DPR));
+  starCanvas.style.width = width + 'px';
+  starCanvas.style.height = height + 'px';
+
+  const base = Math.min(160, Math.floor((width * height) / 6000));
+  const mobileCap = window.matchMedia('(max-width: 720px)').matches ? 80 : base;
+  const count = Math.max(60, Math.min(160, mobileCap));
+
+  stars = Array.from({ length: count }, () => ({
+    x: Math.random() * starCanvas.width,
+    y: Math.random() * starCanvas.height,
+    r: (Math.random() * 1.2 + 0.4) * DPR,
+    s: Math.random() * 0.25 + 0.05,
+    a: Math.random() * Math.PI * 2,
+    t: Math.random() * 0.02 + 0.01
+  }));
+}
+
+function drawStars() {
+  const w = starCanvas.width, h = starCanvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const g = ctx.createRadialGradient(w*0.6, h*0.4, 10, w*0.6, h*0.4, Math.max(w,h)*0.7);
+  g.addColorStop(0, 'rgba(255,255,255,0.04)');
+  g.addColorStop(1, 'rgba(255,255,255,0.00)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,w,h);
+
+  for (const st of stars) {
+    st.y += st.s;
+    st.x += Math.sin(st.a) * 0.05;
+    st.a += st.t;
+
+    if (st.y > h + 2) {
+      st.y = -2;
+      st.x = Math.random() * w;
+    }
+
+    const alpha = 0.35 + Math.sin(st.a) * 0.25;
+    ctx.beginPath();
+    ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+    ctx.fill();
+  }
+  raf = requestAnimationFrame(drawStars);
+}
+
+function startStars() {
+  if (!starCanvas) {
+    const stage = document.querySelector('.lb-stage');
+    if (!stage) return;
+    starCanvas = document.createElement('canvas');
+    starCanvas.id = 'lbStars';
+    stage.prepend(starCanvas);
+    ctx = starCanvas.getContext('2d');
+  }
+  cancelAnimationFrame(raf);
+  resizeStars();
+  raf = requestAnimationFrame(drawStars);
+}
+
+function stopStars() {
+  cancelAnimationFrame(raf);
+  raf = null;
+  if (ctx) ctx.clearRect(0,0,starCanvas.width, starCanvas.height);
+}
+
+window.addEventListener('resize', () => {
+  if (starCanvas && !document.querySelector('.lb').classList.contains('hidden')) {
+    resizeStars();
+  }
 });
 
-// -------------------- "OUR SPECIAL MOMENT" BUTTON --------------------
+// -------------------- SPECIAL MOMENT BUTTON --------------------
 document.addEventListener("DOMContentLoaded", function () {
   const momentBtn = document.createElement("button");
   momentBtn.innerText = "💖 Our Special Moment 💖";
@@ -145,9 +213,6 @@ document.addEventListener("DOMContentLoaded", function () {
     position: "fixed", bottom: "20px", right: "20px", padding: "12px 20px",
     borderRadius: "30px", zIndex: "9999", cursor: "pointer"
   });
-
-  momentBtn.addEventListener("mouseenter", () => momentBtn.style.transform = "scale(1.06)");
-  momentBtn.addEventListener("mouseleave", () => momentBtn.style.transform = "scale(1)");
 
   momentBtn.addEventListener("click", function () {
     const overlay = document.createElement("div");
@@ -176,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.body.appendChild(momentBtn);
 });
 
-// -------------------- SPECIAL QUESTION HANDLING --------------------
+// -------------------- SPECIAL QUESTION --------------------
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("special-question-form");
   if (!form) return;
@@ -197,103 +262,10 @@ function showSpecialMomentButton() {
   btn.className = "btn btn-primary";
   btn.style.display = "inline-block";
   btn.style.marginTop = "20px";
-  document.querySelector(".question-section").appendChild(btn);
+  document.querySelector(".question-section")?.appendChild(btn);
 }
 
-// ===== LIGHTBOX =====
-(() => {
-  const overlay = document.getElementById('lb');
-  if (!overlay) return;
-  const body = document.body;
-  const imgEl = document.getElementById('lbImg');
-  const closeBtn = document.getElementById('lbClose');
-  const prevBtn = document.getElementById('lbPrev');
-  const nextBtn = document.getElementById('lbNext');
-  const nowEl = document.getElementById('lbNow');
-  const totalEl = document.getElementById('lbTotal');
-  const autoplayToggle = document.getElementById('lbAutoplay');
-  const addFileBtn = document.getElementById('lbAddFileBtn');
-  const fileInput = document.getElementById('lbFile');
-  const urlInput = document.getElementById('lbUrl');
-  const addUrlBtn = document.getElementById('lbAddUrlBtn');
-
-  const galleryNodes = document.querySelectorAll('.swiper .swiper-slide img, .special-gallery img');
-  const images = Array.from(galleryNodes).map(img => img.getAttribute('src')).filter(Boolean);
-  const FALLBACK = 'assets/placeholder-image.png';
-
-  let idx = 0;
-  let autoplayTimer = null;
-  function show(i) {
-    if (!images.length) return;
-    idx = (i + images.length) % images.length;
-    const src = images[idx];
-    imgEl.src = src;
-    imgEl.onerror = () => { if (FALLBACK) imgEl.src = FALLBACK; };
-    nowEl.textContent = String(idx + 1);
-    totalEl.textContent = String(images.length);
-  }
-  function openAt(i) {
-    if (!images.length) return;
-    overlay.classList.remove('hidden');
-    overlay.setAttribute('aria-hidden', 'false');
-    body.classList.add('lightbox-open');
-    startStars();
-    show(i);
-    if (autoplayToggle.checked) startAutoplay();
-  }
-  function close() {
-    overlay.classList.add('hidden');
-    overlay.setAttribute('aria-hidden', 'true');
-    body.classList.remove('lightbox-open');
-    stopStars();
-    stopAutoplay();
-  }
-  function next() { show(idx + 1); }
-  function prev() { show(idx - 1); }
-  function startAutoplay() { stopAutoplay(); autoplayTimer = setInterval(next, 2500); }
-  function stopAutoplay() { if (autoplayTimer) clearInterval(autoplayTimer); autoplayTimer = null; }
-
-  galleryNodes.forEach((node, i) => {
-    node.style.cursor = 'zoom-in';
-    node.addEventListener('click', () => openAt(i));
-  });
-  closeBtn.addEventListener('click', close);
-  nextBtn.addEventListener('click', next);
-  prevBtn.addEventListener('click', prev);
-  document.addEventListener('keydown', (e) => {
-    if (overlay.classList.contains('hidden')) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowRight') next();
-    if (e.key === 'ArrowLeft') prev();
-  });
-  overlay.addEventListener('click', (e) => {
-    const withinStage = e.target.closest('.lb-stage');
-    if (!withinStage) close();
-  });
-  autoplayToggle.addEventListener('change', () => {
-    if (autoplayToggle.checked) startAutoplay(); else stopAutoplay();
-  });
-  addFileBtn.addEventListener('click', () => fileInput.click());
-  fileInput.addEventListener('change', () => {
-    const files = Array.from(fileInput.files || []);
-    files.forEach(f => {
-      const reader = new FileReader();
-      reader.onload = () => { images.push(reader.result); totalEl.textContent = String(images.length); };
-      reader.readAsDataURL(f);
-    });
-    if (overlay.classList.contains('hidden') && images.length) openAt(images.length - 1);
-  });
-  addUrlBtn.addEventListener('click', () => {
-    const url = (urlInput.value || '').trim();
-    if (!url) return;
-    images.push(url);
-    urlInput.value = '';
-    totalEl.textContent = String(images.length);
-    if (overlay.classList.contains('hidden')) openAt(images.length - 1);
-  });
-})();
-
-// Smooth fade-up
+// -------------------- FADE UP --------------------
 const faders = document.querySelectorAll('.fade-up');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -305,13 +277,15 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.2 });
 faders.forEach(f => observer.observe(f));
 
-// Surprise Button
-document.getElementById('startBtn').addEventListener('click', () => {
-  document.getElementById('bgMusic').play();
-  confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+// -------------------- SURPRISE BUTTON --------------------
+document.getElementById('startBtn')?.addEventListener('click', () => {
+  document.getElementById('bgMusic')?.play();
+  if (typeof confetti === 'function') {
+    confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+  }
 });
 
-// Fade in sections
+// -------------------- SECTION FADE --------------------
 const sections = document.querySelectorAll('section');
 window.addEventListener('scroll', () => {
   sections.forEach(section => {
@@ -321,17 +295,19 @@ window.addEventListener('scroll', () => {
   });
 });
 
-// Hearts
+// -------------------- HEARTS --------------------
 const heartsContainer = document.getElementById('hearts');
-setInterval(()=>{
-  const h = document.createElement('div');
-  h.className = 'heart';
-  h.style.left = Math.random() * window.innerWidth + 'px';
-  heartsContainer.appendChild(h);
-  setTimeout(() => h.remove(), 4000);
-}, 300);
+if (heartsContainer) {
+  setInterval(()=>{
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.style.left = Math.random() * window.innerWidth + 'px';
+    heartsContainer.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }, 300);
+}
 
-// Surprise cake animation
+// -------------------- SURPRISE CAKE --------------------
 const surpriseBtn = document.getElementById('openSurprise');
 if (surpriseBtn) {
   surpriseBtn.addEventListener('click', () => {
@@ -340,7 +316,7 @@ if (surpriseBtn) {
   });
 }
 
-// Unified Scroll fade-in (removed duplicates)
+// -------------------- SCROLL FADE --------------------
 const fadeElements = document.querySelectorAll('.scroll-fade');
 window.addEventListener('scroll', () => {
   fadeElements.forEach(el => {
