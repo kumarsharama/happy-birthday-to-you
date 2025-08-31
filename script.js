@@ -385,25 +385,6 @@ document.getElementById('openSurprise').addEventListener('click', () => {
   const cake = document.querySelector('.cake-container');
   cake.classList.add('show');
 });
-// JS to trigger fade-in
-const fadeElements = document.querySelectorAll('.scroll-fade');
-window.addEventListener('scroll', () => {
-  fadeElements.forEach(el => {
-    if(el.getBoundingClientRect().top < window.innerHeight - 100) {
-      el.classList.add('show');
-    }
-  });
-});
-// 1. Scroll fade-in
-const fadeElements = document.querySelectorAll('.scroll-fade');
-window.addEventListener('scroll', () => {
-  fadeElements.forEach(el => {
-    if(el.getBoundingClientRect().top < window.innerHeight - 100) {
-      el.classList.add('show');
-    }
-  });
-});
-
 // 2. Cake animation trigger
 document.getElementById('openSurprise')?.addEventListener('click', () => {
   const cake = document.querySelector('.cake-container');
