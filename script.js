@@ -380,3 +380,17 @@ setInterval(()=>{
   heartsContainer.appendChild(h);
   setTimeout(() => h.remove(), 4000);
 }, 300);
+// Example: when user clicks "Open Surprise" button
+document.getElementById('openSurprise').addEventListener('click', () => {
+  const cake = document.querySelector('.cake-container');
+  cake.classList.add('show');
+});
+// JS to trigger fade-in
+const fadeElements = document.querySelectorAll('.scroll-fade');
+window.addEventListener('scroll', () => {
+  fadeElements.forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add('show');
+    }
+  });
+});
