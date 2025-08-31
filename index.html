@@ -1,154 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>happy birthday</title>
-  
-  <link rel="stylesheet" href="style.css">
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 </head>
-<body class="main-page">
-  
-  <!-- Navigation -->
-  <nav>
-    <a href="#hero">Home</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#countdown">Countdown</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<body>
+  <canvas id="bgCanvas"></canvas>
 
-  <!-- Hero Section -->
-  <section id="hero">
-    <h1>Welcome to the Celebration!</h1>
-    <p>Have fun and enjoy 🎉</p>
-  </section>
-  
+  <div class="container fade-in">
+    <h1 class="title">🎉 Happy Birthday! 🎉</h1>
+    <p class="subtitle">A little surprise for you...</p>
+  </div>
+
   <!-- Countdown Section -->
   <section id="countdown">
     <h2>Countdown to Surprise</h2>
     <div id="countdown-timer"></div>
   </section>
 
-  <!-- Contact / Footer Section -->
-  <section id="contact">
-    <h2>Contact / Wishes</h2>
-    <p>Leave your message here!</p>
-  </section>
-
-  <!-- 🎥 Hero Section with Video Background -->
-  <section class="hero">
-    <video autoplay muted loop playsinline class="hero-bg">
-      <source src="assets/background.mp4" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
-
-    <div class="hero-content">
-      <h1 class="hero-title">🎂 Happy Birthday Rani 🎂</h1>
-      <p class="hero-subtitle">Wishing you love, laughter, and joy today and always 💖</p>
-      <button id="startBtn" class="btn hero-btn">Open Your Surprise 🎁</button>
-    </div>
-  </section>
-
-  <!-- 🎯 Countdown -->
-  <section class="countdown fade-up">
-    <h2>⏰ Time left until your special day ends:</h2>
-    <div id="timer" class="timer"></div>
-  </section>
-
-  <!-- 🖼️ Gallery -->
-  <section class="gallery fade-up">
-    <h2>✨ Memories Together</h2>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="images/photo1.png" alt="Photo 1" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
-        <div class="swiper-slide"><img src="images/photo2.jpg" alt="Photo 2" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
-        <div class="swiper-slide"><img src="images/photo3.jpg" alt="Photo 3" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
-  </section>
-
-  <!-- 💌 Message -->
-  <section class="message fade-up glass-card">
-    <h2>A Message for You</h2>
+  <!-- Message Section -->
+  <section class="message fade-in">
     <p id="typed-message"></p>
   </section>
 
-  <!-- 🎶 Music -->
-  <section class="music fade-up">
-    <h2>🎵 Special Music</h2>
-    <audio id="bgMusic" src="assets/happy.mp3" loop preload="auto"></audio>
-    <audio id="birthday-music" controls>
-      <source src="assets/music/birthday.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+  <!-- Swiper Section -->
+  <section class="swiper-section">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="images/photo1.png" alt="photo1"></div>
+        <div class="swiper-slide"><img src="images/photo2.jpg" alt="photo2"></div>
+        <div class="swiper-slide"><img src="images/photo3.jpg" alt="photo3"></div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
   </section>
 
-  <!-- ❓ Question -->
-  <section class="question fade-up glass-card">
-    <h2>Do you want to see something special?</h2>
+  <!-- Question Section -->
+  <section class="question-section fade-in">
+    <h2>Do you like the surprise? 💖</h2>
     <form id="special-question-form">
-      <label><input type="radio" name="specialAnswer" value="Yes"> Yes</label>
-      <label><input type="radio" name="specialAnswer" value="No"> No</label>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" name="specialAnswer" value="Yes" class="btn btn-primary">Yes</button>
+      <button type="submit" name="specialAnswer" value="No" class="btn btn-outline">No</button>
     </form>
   </section>
-  
-  <div id="countdown"></div>
-  <script>
-  let targetDate=new Date("2025-09-10 00:00:00").getTime();
-  let timer=setInterval(()=>{
-    let now=new Date().getTime();
-    let diff=targetDate-now;
-    if(diff<0){ clearInterval(timer); document.getElementById('countdown').innerHTML="Event Started!"; return;}
-    let d=Math.floor(diff/(1000*60*60*24));
-    let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-    let m=Math.floor((diff%(1000*60*60))/(1000*60));
-    let s=Math.floor((diff%(1000*60))/1000);
-    document.getElementById('countdown').innerHTML=`${d}d ${h}h ${m}m ${s}s`;
-  },1000);
-  </script>
 
-  <!-- 🔗 Actions -->
-  <div class="actions fade-up">
-    <a href="sorry.html" class="btn btn-outline">I Have Something to Say...</a>
+  <!-- Music and Video -->
+  <video autoplay muted loop id="bgVideo">
+    <source src="assets/background.mp4" type="video/mp4">
+  </video>
+  <audio id="bgMusic" src="assets/music/birthday.mp3" loop></audio>
+
+  <!-- Surprise Section -->
+  <section class="fade-in">
+    <button id="startBtn" class="btn btn-primary">Start Surprise</button>
+  </section>
+
+  <!-- Hearts -->
+  <div id="hearts"></div>
+
+  <!-- Lightbox -->
+  <div class="lb hidden">
+    <div class="lb-stage"></div>
+    <button class="lb-close">×</button>
+    <button class="lb-nav lb-prev">‹</button>
+    <button class="lb-nav lb-next">›</button>
+    <div class="lb-counter"></div>
+    <div class="lb-tools">
+      <label class="lb-toggle"><input type="checkbox" id="lbAuto"> Auto</label>
+      <input type="text" class="lb-url" readonly />
+    </div>
   </div>
 
-  <!-- Scripts -->
-  <canvas id="bgCanvas"></canvas>
+  <!-- Countdown Script -->
   <script>
-  const canvas=document.getElementById('bgCanvas');
-  const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  let particles=[];
-  for(let i=0;i<150;i++){
-    particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1});
-  }
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='white';
-      ctx.fill();
-      p.y-=0.5;
-      if(p.y<0) p.y=canvas.height;
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
+  let targetDate = new Date("2025-09-10 00:00:00").getTime();
+  let timer = setInterval(() => {
+    let now = new Date().getTime();
+    let diff = targetDate - now;
+    if (diff < 0) {
+      clearInterval(timer);
+      document.getElementById('countdown-timer').innerHTML = "Event Started!";
+      return;
+    }
+    let d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    let s = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('countdown-timer').innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+  }, 1000);
   </script>
 
-  <!-- External Libraries + Script -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
