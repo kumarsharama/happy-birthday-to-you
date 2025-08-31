@@ -326,6 +326,8 @@ body.lightbox-open .container { filter: blur(8px); transition: filter .25s ease;
   padding: 10px 12px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.06); color: #fff;
 }
+/* Buttons inside overlay reuse your .btn styles; ensure contrast */
+.lb .btn-outline { color: #fff; border-color: rgba(255,255,255,0.25); }
 
 /* Starfield layer behind the photo */
 .lb-stage { position: relative; }
@@ -343,88 +345,6 @@ body.lightbox-open .container { filter: blur(8px); transition: filter .25s ease;
 }
 .lb-nav, .lb-counter, .lb-close { z-index: 2; }
 
-  // ===== Starfield setup (canvas injected so no HTML edits) =====
-  const stage = overlay.querySelector('.lb-stage');
-  let starCanvas = document.getElementById('lbStars');
-  if (!starCanvas) {
-    starCanvas = document.createElement('canvas');
-    starCanvas.id = 'lbStars';
-    stage.prepend(starCanvas); // behind <img>
-  }
-  const ctx = starCanvas.getContext('2d');
-
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let stars = [];
-  let raf = null;
-
-  function resizeStars() {
-    const { width, height } = stage.getBoundingClientRect();
-    starCanvas.width = Math.max(1, Math.floor(width * DPR));
-    starCanvas.height = Math.max(1, Math.floor(height * DPR));
-    starCanvas.style.width = width + 'px';
-    starCanvas.style.height = height + 'px';
-
-    // density scales with area (but capped for perf)
-    const base = Math.min(160, Math.floor((width * height) / 6000));
-    const mobileCap = window.matchMedia('(max-width: 720px)').matches ? 80 : base;
-    const count = Math.max(60, Math.min(160, mobileCap));
-
-    stars = Array.from({ length: count }, () => ({
-      x: Math.random() * starCanvas.width,
-      y: Math.random() * starCanvas.height,
-      r: (Math.random() * 1.2 + 0.4) * DPR,
-      s: Math.random() * 0.25 + 0.05,   // speed
-      a: Math.random() * Math.PI * 2,   // twinkle phase
-      t: Math.random() * 0.02 + 0.01    // twinkle speed
-    }));
-  }
-
-  function drawStars() {
-    const w = starCanvas.width, h = starCanvas.height;
-    ctx.clearRect(0, 0, w, h);
-
-    // faint nebula gradient for dreamy vibe
-    const g = ctx.createRadialGradient(w*0.6, h*0.4, 10, w*0.6, h*0.4, Math.max(w,h)*0.7);
-    g.addColorStop(0, 'rgba(255,255,255,0.04)');
-    g.addColorStop(1, 'rgba(255,255,255,0.00)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0,0,w,h);
-
-    for (const st of stars) {
-      st.y += st.s;                  // drift downward
-      st.x += Math.sin(st.a) * 0.05; // gentle horizontal sway
-      st.a += st.t;                  // advance twinkle phase
-
-      if (st.y > h + 2) {           // wrap to top
-        st.y = -2;
-        st.x = Math.random() * w;
-      }
-
-      const alpha = 0.35 + Math.sin(st.a) * 0.25; // twinkle
-      ctx.beginPath();
-      ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-      ctx.fill();
-    }
-    raf = requestAnimationFrame(drawStars);
-  }
-
-  function startStars() {
-    cancelAnimationFrame(raf);
-    resizeStars();
-    raf = requestAnimationFrame(drawStars);
-  }
-  function stopStars() {
-    cancelAnimationFrame(raf);
-    raf = null;
-    if (ctx) ctx.clearRect(0,0,starCanvas.width, starCanvas.height);
-  }
-  window.addEventListener('resize', () => {
-    if (!overlay.classList.contains('hidden')) resizeStars();
-  });
-
-/* Buttons inside overlay reuse your .btn styles; ensure contrast */
-.lb .btn-outline { color: #fff; border-color: rgba(255,255,255,0.25); }
 
 /* Mobile tweaks */
 @media (max-width: 720px){
