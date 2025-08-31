@@ -858,3 +858,31 @@ p, span, li {
   text-align: center;
   padding: 40px 20px;
 }
+/* ===== Force all text black ===== */
+body, h1, h2, h3, h4, h5, h6,
+p, span, li, a, button, input, label, div {
+  color: #000 !important;   /* force black */
+  text-shadow: none !important; /* remove any shadows */
+}
+
+/* Swiper buttons and pagination also black */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000 !important;
+}
+
+.swiper-pagination-bullet {
+  background: #000 !important;
+}
+
+/* Question buttons fix */
+.question-section .btn {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+.question-section .btn.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff !important; /* keep contrast for primary button text */
+}
