@@ -314,3 +314,29 @@ p, span, li, a, button, input, label, div {
   0% { transform: scale(1); opacity: 1; }
   100% { transform: scale(3); opacity: 0; }
 }
+/* ===== Gallery Pink Placeholder Style ===== */
+.swiper-slide {
+  background: linear-gradient(135deg, #ff9a9e, #ff6f91);
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 280px; /* placeholder height */
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+
+/* Hide broken images, keep pink bg */
+.swiper-slide img[src=""], 
+.swiper-slide img:not([src]),
+.swiper-slide img[src="assets/placeholder-image.png"] {
+  display: none;
+}
