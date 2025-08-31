@@ -781,3 +781,80 @@ img:hover {
   transform: translateX(-50%);
   animation: flame 0.5s infinite alternate;
 }
+/* ===== Global Text Contrast Fixes ===== */
+
+/* Ensure body text stands out on pink background */
+body {
+  color: #fff;  /* white default text */
+}
+
+/* Add subtle shadow to improve readability */
+h1, h2, h3, h4, h5, h6,
+p, span, li {
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* ===== Hero Section ===== */
+#hero {
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+#hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+#hero p {
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+/* ===== Countdown Section ===== */
+#countdown, #countdown-timer {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ===== Swiper Text & Controls ===== */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #fff !important;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.swiper-pagination-bullet {
+  background: #fff !important;
+}
+
+/* ===== Question Section ===== */
+.question-section h2 {
+  color: #fff;
+}
+
+.question-section .btn {
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.question-section .btn.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ===== Special Moment Modal ===== */
+.lb .btn-outline {
+  color: #fff;
+  border-color: rgba(255,255,255,0.6);
+}
+
+/* ===== Footer or Contact Section ===== */
+#contact {
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+}
