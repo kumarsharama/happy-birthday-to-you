@@ -743,3 +743,60 @@ h1, h2, p {
   opacity: 1;
   transform: translateY(0);
 }
+/* 1. Ensure background canvas is behind content */
+#bgCanvas {
+  z-index: -1;
+}
+
+/* 2. Text overlay for readability */
+.text-overlay {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.3);
+  padding: 15px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+/* 3. Hover effect for images */
+img {
+  transition: transform 0.5s, filter 0.5s;
+}
+img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+/* 4. Scroll fade-in animation */
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+.scroll-fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 5. Cake animation */
+.cake-container {
+  position: relative;
+  width: 300px;
+  margin: 20px auto;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.cake-container.show {
+  opacity: 1;
+}
+.cake {
+  width: 100%;
+  transform: scale(0);
+  animation: cake-appear 1s forwards;
+}
+@keyframes cake-appear {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100%
