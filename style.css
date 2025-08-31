@@ -800,3 +800,64 @@ img:hover {
   0% { transform: scale(0); }
   60% { transform: scale(1.2); }
   100%
+/* Dark overlay behind text */
+.section {
+  position: relative;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4); /* dark transparent layer */
+  z-index: 0;
+}
+
+.section * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fade-in scroll effect */
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+.scroll-fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cake animation */
+.cake-container {
+  position: relative;
+  width: 250px;
+  margin: 20px auto;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.cake-container.show {
+  opacity: 1;
+}
+.cake {
+  width: 100%;
+  transform: scale(0);
+  animation: cake-appear 1s forwards;
+}
+@keyframes cake-appear {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.candle-flame {
+  width: 12px;
+  height: 20px;
+  background: orange;
+  border-radius: 50%;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: flame 0.5s infinite alternate;
+}
