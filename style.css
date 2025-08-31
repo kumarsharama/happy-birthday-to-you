@@ -586,3 +586,18 @@ body.main-page {
 @keyframes fadeIn {
   to { opacity: 1; }
 }
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
