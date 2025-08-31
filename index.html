@@ -2,104 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday 🎉</title>
 
-  <!-- Fixed: separate links for Swiper CSS and Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="main-page">
-  <div class="container">
-    <div class="hearts" aria-hidden="true"></div>
 
-    <!-- Lightbox Overlay -->
-<div id="lb" class="lb hidden" aria-hidden="true" role="dialog" aria-label="Photo viewer">
-  <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <!-- 🎥 Hero Section with Video Background -->
+  <section class="hero">
+    <video autoplay muted loop playsinline class="hero-bg">
+      <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
 
-  <div class="lb-stage">
-    <img id="lbImg" alt="Photo" />
-    <div class="lb-counter"><span id="lbNow">1</span>/<span id="lbTotal">1</span></div>
-    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
-    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
-  </div>
-
-  <!-- Tools: autoplay + add images -->
-  <div class="lb-tools">
-    <label class="lb-toggle">
-      <input type="checkbox" id="lbAutoplay"> Autoplay
-    </label>
-    <button class="btn btn-outline" id="lbAddFileBtn">Add from device</button>
-    <input type="file" id="lbFile" accept="image/*" hidden>
-    <input type="url" id="lbUrl" class="lb-url" placeholder="Paste image URL">
-    <button class="btn btn-primary" id="lbAddUrlBtn">Add</button>
-  </div>
-</div>
-
-    <h1 class="animated-title">🎂 Happy Birthday Rani 🎂</h1>
-<p class="animated-subtitle">Wishing you love, laughter, and joy today and always 💖</p>
-
-    <!-- Countdown Timer -->
-    <div class="countdown">
-      <h2>Time left until your special day ends:</h2>
-      <div id="timer" aria-live="polite"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">🎂 Happy Birthday Rani 🎂</h1>
+      <p class="hero-subtitle">Wishing you love, laughter, and joy today and always 💖</p>
+      <button id="startBtn" class="btn hero-btn">Open Your Surprise 🎁</button>
     </div>
+  </section>
 
-    <!-- Image Gallery (Swiper) -->
+  <!-- 🎯 Countdown -->
+  <section class="countdown fade-up">
+    <h2>⏰ Time left until your special day ends:</h2>
+    <div id="timer" class="timer"></div>
+  </section>
+
+  <!-- 🖼️ Gallery -->
+  <section class="gallery fade-up">
+    <h2>✨ Memories Together</h2>
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide"><img src="images/photo1.png" alt="Photo 1" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
         <div class="swiper-slide"><img src="images/photo2.jpg" alt="Photo 2" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
         <div class="swiper-slide"><img src="images/photo3.jpg" alt="Photo 3" onerror="this.onerror=null;this.src='assets/placeholder-image.png'"></div>
       </div>
-      <div class="swiper-pagination" aria-hidden="true"></div>
-      <div class="swiper-button-next" aria-hidden="true"></div>
-      <div class="swiper-button-prev" aria-hidden="true"></div>
+      <div class="swiper-pagination"></div>
     </div>
+  </section>
 
-    <!-- Message Section -->
-    <div class="message">
-      <h2>A Message for You</h2>
-      <p id="typed-message" aria-live="polite"></p>
-    </div>
+  <!-- 💌 Message -->
+  <section class="message fade-up glass-card">
+    <h2>A Message for You</h2>
+    <p id="typed-message"></p>
+  </section>
 
-    <h1 class="fade-in">🎂 Happy Birthday, My Friend! 🎂</h1>
-    <p class="fade-in" style="animation-delay: 1s;">Wishing you a day filled with love, laughter, and joy 💖</p>
-    <img src="images/cake.jpg" alt="Birthday Cake" class="fade-in" style="animation-delay: 2s;" onerror="this.onerror=null;this.src='assets/placeholder-image.png'">
-
-    <!-- Primary background music (one element) -->
+  <!-- 🎶 Music -->
+  <section class="music fade-up">
+    <h2>🎵 Special Music</h2>
     <audio id="bgMusic" src="assets/happy.mp3" loop preload="auto"></audio>
-
-    <!-- Secondary music (optional) -->
-    <audio id="birthday-music" controls style="margin-top:18px;">
+    <audio id="birthday-music" controls>
       <source src="assets/music/birthday.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
+  </section>
 
-    <!-- Choice Section -->
-   <section class="question-section">
-  <h2>Do you want to see something special?</h2>
-  <form id="special-question-form">
-    <label><input type="radio" name="specialAnswer" value="Yes"> Yes</label>
-    <label><input type="radio" name="specialAnswer" value="No"> No</label>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</section>
+  <!-- ❓ Question -->
+  <section class="question fade-up glass-card">
+    <h2>Do you want to see something special?</h2>
+    <form id="special-question-form">
+      <label><input type="radio" name="specialAnswer" value="Yes"> Yes</label>
+      <label><input type="radio" name="specialAnswer" value="No"> No</label>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </section>
 
-    <!-- Buttons laid out consistently -->
-    <div class="actions-row">
-      <a href="sorry.html" class="btn btn-outline sorry-btn">I Have Something to Say...</a>
-    </div>
+  <!-- 🔗 Actions -->
+  <div class="actions fade-up">
+    <a href="sorry.html" class="btn btn-outline">I Have Something to Say...</a>
   </div>
 
-  <!-- Swiper & confetti CDN -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
-  <!-- App script (upgraded) -->
   <script src="script.js"></script>
 </body>
 </html>
