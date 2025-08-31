@@ -352,15 +352,3 @@ if (surpriseBtn) {
       flame.style.display = "none"; // blow out
       new Audio("sounds/blow.mp3").play(); // candle blow sound
     }, 3000);
-
-    // Cake explodes after 5s
-    setTimeout(() => {
-      cake.style.animation = "cake-explode 1s forwards";
-      new Audio("sounds/pop.mp3").play(); // explosion sound
-      // Optional: add confetti at explosion
-      if (typeof confetti === 'function') {
-        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-      }
-    }, 5000);
-  });
-}
