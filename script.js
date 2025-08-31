@@ -54,10 +54,7 @@ function createHeart() {
   heart.style.left = Math.random() * 95 + 'vw';
   heart.style.animationDuration = (3 + Math.random() * 2) + 's';
   document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 5000);
+  setTimeout(() => heart.remove(), 5000);
 }
 setInterval(createHeart, 600);
 
@@ -87,10 +84,8 @@ window.addEventListener('load', initSwiper);
 document.addEventListener("click", function playMusic() {
   let audio = document.getElementById("bgMusic");
   if (!audio) return;
-
   audio.muted = false;
   audio.volume = 0;
-
   let fadeAudio = setInterval(function () {
     if (audio.volume < 1) {
       audio.volume = Math.min(1, audio.volume + 0.05);
@@ -98,7 +93,6 @@ document.addEventListener("click", function playMusic() {
       clearInterval(fadeAudio);
     }
   }, 200);
-
   audio.play().catch(err => console.error("Music play error:", err));
   document.removeEventListener("click", playMusic);
 });
@@ -123,8 +117,8 @@ function launchConfetti() {
 }
 window.addEventListener('load', () => setTimeout(launchConfetti, 600));
 
-// -------------------- STARFIELD (moved from CSS) --------------------
-let starCanvas, ctx, stars = [], raf = null;
+// -------------------- STARFIELD --------------------
+let starCanvas, starCtx, stars = [], raf = null;  // FIX: renamed ctx -> starCtx
 const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
 function resizeStars() {
@@ -134,11 +128,9 @@ function resizeStars() {
   starCanvas.height = Math.max(1, Math.floor(height * DPR));
   starCanvas.style.width = width + 'px';
   starCanvas.style.height = height + 'px';
-
   const base = Math.min(160, Math.floor((width * height) / 6000));
   const mobileCap = window.matchMedia('(max-width: 720px)').matches ? 80 : base;
   const count = Math.max(60, Math.min(160, mobileCap));
-
   stars = Array.from({ length: count }, () => ({
     x: Math.random() * starCanvas.width,
     y: Math.random() * starCanvas.height,
@@ -151,29 +143,22 @@ function resizeStars() {
 
 function drawStars() {
   const w = starCanvas.width, h = starCanvas.height;
-  ctx.clearRect(0, 0, w, h);
-
-  const g = ctx.createRadialGradient(w*0.6, h*0.4, 10, w*0.6, h*0.4, Math.max(w,h)*0.7);
+  starCtx.clearRect(0, 0, w, h);
+  const g = starCtx.createRadialGradient(w*0.6, h*0.4, 10, w*0.6, h*0.4, Math.max(w,h)*0.7);
   g.addColorStop(0, 'rgba(255,255,255,0.04)');
   g.addColorStop(1, 'rgba(255,255,255,0.00)');
-  ctx.fillStyle = g;
-  ctx.fillRect(0,0,w,h);
-
+  starCtx.fillStyle = g;
+  starCtx.fillRect(0,0,w,h);
   for (const st of stars) {
     st.y += st.s;
     st.x += Math.sin(st.a) * 0.05;
     st.a += st.t;
-
-    if (st.y > h + 2) {
-      st.y = -2;
-      st.x = Math.random() * w;
-    }
-
+    if (st.y > h + 2) { st.y = -2; st.x = Math.random() * w; }
     const alpha = 0.35 + Math.sin(st.a) * 0.25;
-    ctx.beginPath();
-    ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-    ctx.fill();
+    starCtx.beginPath();
+    starCtx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+    starCtx.fillStyle = `rgba(255,255,255,${alpha})`;
+    starCtx.fill();
   }
   raf = requestAnimationFrame(drawStars);
 }
@@ -185,7 +170,7 @@ function startStars() {
     starCanvas = document.createElement('canvas');
     starCanvas.id = 'lbStars';
     stage.prepend(starCanvas);
-    ctx = starCanvas.getContext('2d');
+    starCtx = starCanvas.getContext('2d');
   }
   cancelAnimationFrame(raf);
   resizeStars();
@@ -195,7 +180,7 @@ function startStars() {
 function stopStars() {
   cancelAnimationFrame(raf);
   raf = null;
-  if (ctx) ctx.clearRect(0,0,starCanvas.width, starCanvas.height);
+  if (starCtx) starCtx.clearRect(0,0,starCanvas.width, starCanvas.height);
 }
 
 window.addEventListener('resize', () => {
@@ -213,19 +198,16 @@ document.addEventListener("DOMContentLoaded", function () {
     position: "fixed", bottom: "20px", right: "20px", padding: "12px 20px",
     borderRadius: "30px", zIndex: "9999", cursor: "pointer"
   });
-
   momentBtn.addEventListener("click", function () {
     const overlay = document.createElement("div");
     Object.assign(overlay.style, {
       position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "rgba(0,0,0,0.7)",
       display: "flex", justifyContent: "center", alignItems: "center", zIndex: 10000
     });
-
     const modal = document.createElement("div");
     Object.assign(modal.style, {
       background: "white", padding: "20px", borderRadius: "12px", textAlign: "center", maxWidth: "420px"
     });
-
     modal.innerHTML = `
       <h2 style="color:#ff4b6e;">💖 Our Special Moment 💖</h2>
       <p style="font-size: 15px; color: #333;">From the day we met to this beautiful day, every moment with you has been magical. Here's to many more!</p>
@@ -234,10 +216,8 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
-
     document.getElementById("closeMoment").addEventListener("click", () => overlay.remove());
   });
-
   document.body.appendChild(momentBtn);
 });
 
@@ -298,8 +278,7 @@ window.addEventListener('scroll', () => {
 // -------------------- HEARTS --------------------
 const heartsContainer = document.getElementById('hearts');
 if (heartsContainer) {
-  setInterval(()=>{
-    const h = document.createElement('div');
+  setInterval(()=>{ const h = document.createElement('div');
     h.className = 'heart';
     h.style.left = Math.random() * window.innerWidth + 'px';
     heartsContainer.appendChild(h);
