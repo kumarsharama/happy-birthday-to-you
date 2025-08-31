@@ -345,3 +345,20 @@ galleryNodes.forEach((node, i) => {
     if (overlay.classList.contains('hidden')) openAt(images.length - 1);
   });
 })();
+// Smooth fade-up on scroll
+const faders = document.querySelectorAll('.fade-up');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+faders.forEach(f => observer.observe(f));
+
+// Surprise Button triggers confetti + music
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('bgMusic').play();
+  confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+});
