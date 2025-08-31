@@ -362,3 +362,12 @@ document.getElementById('startBtn').addEventListener('click', () => {
   document.getElementById('bgMusic').play();
   confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
 });
+// Fade in sections on scroll
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', () => {
+  sections.forEach(section => {
+    if (section.getBoundingClientRect().top < window.innerHeight - 100) {
+      section.classList.add('show');
+    }
+  });
+});
