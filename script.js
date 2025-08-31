@@ -371,3 +371,12 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+// Hearts Section Example
+const heartsContainer = document.getElementById('hearts');
+setInterval(()=>{
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.style.left = Math.random() * window.innerWidth + 'px';
+  heartsContainer.appendChild(h);
+  setTimeout(() => h.remove(), 4000);
+}, 300);
