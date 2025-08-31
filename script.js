@@ -334,3 +334,33 @@ if (surpriseBtn) {
     }
   });
 }
+// 🎂 Surprise Cake Animation
+const surpriseBtn = document.getElementById('openSurprise');
+if (surpriseBtn) {
+  surpriseBtn.addEventListener('click', () => {
+    const cakeContainer = document.querySelector('.cake-container');
+    const flame = document.querySelector('.candle-flame');
+    const cake = document.querySelector('.cake');
+
+    if (!cakeContainer || !flame || !cake) return;
+
+    // Show cake
+    cakeContainer.classList.add('show');
+
+    // Candle flickers for 3s
+    setTimeout(() => {
+      flame.style.display = "none"; // blow out
+      new Audio("sounds/blow.mp3").play(); // candle blow sound
+    }, 3000);
+
+    // Cake explodes after 5s
+    setTimeout(() => {
+      cake.style.animation = "cake-explode 1s forwards";
+      new Audio("sounds/pop.mp3").play(); // explosion sound
+      // Optional: add confetti at explosion
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+      }
+    }, 5000);
+  });
+}
