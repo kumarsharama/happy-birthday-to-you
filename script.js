@@ -409,3 +409,21 @@ document.getElementById('openSurprise')?.addEventListener('click', () => {
   const cake = document.querySelector('.cake-container');
   if(cake) cake.classList.add('show');
 });
+// Scroll fade-in
+const fadeElements = document.querySelectorAll('.scroll-fade');
+window.addEventListener('scroll', () => {
+  fadeElements.forEach(el => {
+    if(el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add('show');
+    }
+  });
+});
+
+// Surprise cake animation
+const surpriseBtn = document.getElementById('openSurprise');
+if (surpriseBtn) {
+  surpriseBtn.addEventListener('click', () => {
+    const cake = document.querySelector('.cake-container');
+    if (cake) cake.classList.add('show');
+  });
+}
