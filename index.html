@@ -3,158 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-
-  <!-- Styles -->
+  <title>Happy Birthday 🎉</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 </head>
-<body class="main-page">
+<body>
+  <!-- Background Canvas -->
+  <canvas id="bgCanvas"></canvas>
 
-<!-- Navigation -->
-<nav>
-  <a href="#hero">Home</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#countdown">Countdown</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<!-- Hero Section -->
-<section id="hero" class="hero">
-  <video autoplay muted loop playsinline class="hero-bg">
-    <source src="assets/background.mp4" type="video/mp4">
-  </video>
-  <div class="overlay"></div>
-
-  <div class="hero-content">
-    <h1 class="hero-title">🎂 Happy Birthday Rani 🎂</h1>
-    <p class="hero-subtitle">Wishing you love, laughter, and joy today and always 💖</p>
-    <button id="startBtn" class="btn hero-btn">Open Your Surprise 🎁</button>
-
-    <!-- Hero Photos (3) -->
-    <div class="hero-photos fade-up">
-      <img src="images/photo1.png" alt="Photo 1" onerror="this.onerror=null;this.src='assets/placeholder-image.png'">
-      <img src="images/photo2.png" alt="Photo 2" onerror="this.onerror=null;this.src='assets/placeholder-image.png'">
-      <img src="images/photo3.png" alt="Photo 3" onerror="this.onerror=null;this.src='assets/placeholder-image.png'">
+  <!-- Hero Section -->
+  <section class="hero section scroll-fade">
+    <div class="text-overlay">
+      <h1 id="typed"></h1>
+      <p>Wishing you the happiest birthday ever! 🎂🎉</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- 🎯 Countdown -->
-<section class="countdown fade-up" id="countdown">
-  <h2>⏰ Time left until your special day ends:</h2>
-  <div id="timer" class="timer"></div>
-</section>
-
-<!-- 🖼️ Gallery (3 photos) -->
-<section class="gallery fade-up">
-  <h2>✨ Memories Together</h2>
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="images/photo4.png" alt="Photo 4"></div>
-      <div class="swiper-slide"><img src="images/photo5.png" alt="Photo 5"></div>
-      <div class="swiper-slide"><img src="images/photo6.png" alt="Photo 6"></div>
+  <!-- Surprise Section -->
+  <section class="section scroll-fade">
+    <h2>Open Your Surprise 🎁</h2>
+    <button id="openSurprise">Open</button>
+    <div class="cake-container">
+      <img src="images/cake.png" class="cake" alt="Birthday Cake">
+      <div class="candle-flame"></div>
     </div>
-    <div class="swiper-pagination"></div>
-  </div>
-</section>
+  </section>
 
-<!-- Open Surprise Photos (2) will appear on button click -->
-<div id="surpriseContainer"></div>
-
-<!-- 💌 Message -->
-<section class="message fade-up glass-card">
-  <h2>A Message for You</h2>
-  <p id="typed-message"></p>
-</section>
-
-<!-- 🎶 Music -->
-<section class="music fade-up">
-  <h2>🎵 Special Music</h2>
-  <audio id="bgMusic" src="assets/happy.mp3" loop preload="auto"></audio>
-</section>
-
-<!-- ❓ Question -->
-<section class="question fade-up glass-card">
-  <h2>Do you want to see something special?</h2>
-  <form id="special-question-form">
-    <label><input type="radio" name="specialAnswer" value="Yes"> Yes</label>
-    <label><input type="radio" name="specialAnswer" value="No"> No</label>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</section>
-
-<!-- Scripts -->
-<canvas id="bgCanvas"></canvas>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-<script src="script.js"></script>
-
-<script>
-// -------------------- HERO SURPRISE PHOTOS --------------------
-document.getElementById('startBtn')?.addEventListener('click', () => {
-  const surpriseContainer = document.getElementById('surpriseContainer');
-  if (!surpriseContainer) return;
-
-  // Only create once
-  if (!surpriseContainer.hasChildNodes()) {
-    const container = document.createElement('div');
-    container.className = 'surprise-photos fade-up';
-    container.innerHTML = `
-      <h3>🎁 Surprise Photos</h3>
-      <div class="photo-container">
-        <img src="images/photo7.png" alt="Photo 7">
-        <img src="images/photo8.png" alt="Photo 8">
+  <!-- Image Carousel -->
+  <section class="section scroll-fade">
+    <h2>Memories ❤️</h2>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="images/photo1.png" alt="photo1"></div>
+        <div class="swiper-slide"><img src="images/photo2.jpg" alt="photo2"></div>
+        <div class="swiper-slide"><img src="images/photo3.jpg" alt="photo3"></div>
       </div>
-    `;
-    surpriseContainer.appendChild(container);
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
 
-    // Scroll into view
-    container.scrollIntoView({ behavior: 'smooth' });
+  <!-- Music -->
+  <audio id="bgMusic" src="assets/music/birthday.mp3" loop></audio>
 
-    // Confetti
-    if (typeof confetti === 'function') {
-      confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
-    }
-  }
-});
-
-// -------------------- TYPING EFFECT --------------------
-const text = "You are one of the most special people in my life. I’m truly grateful to have you for some time only but at least I have.";
-let i = 0;
-function typeMessage() {
-  const target = document.getElementById("typed-message");
-  if (!target) return;
-  if (i < text.length) {
-    target.innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeMessage, 40);
-  }
-}
-typeMessage();
-
-// -------------------- SWIPER INIT --------------------
-window.addEventListener('load', () => {
-  if (typeof Swiper === 'function') {
-    new Swiper(".mySwiper", {
-      loop: true,
-      centeredSlides: true,
-      grabCursor: true,
-      effect: "fade",
-      fadeEffect: { crossFade: true },
-      speed: 1200,
-      autoplay: { delay: 2500, disableOnInteraction: false },
-      pagination: { el: ".swiper-pagination", clickable: true },
-    });
-  }
-});
-</script>
-
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
